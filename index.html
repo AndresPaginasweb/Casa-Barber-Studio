@@ -1,834 +1,962 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
 <!--
-  PLANTILLA GENÉRICA — BARBERÍA / SALÓN
-  ======================================
-  Antes de enviar esto a un prospecto, personaliza (Ctrl+F cada uno):
-  1. "Casa Barber Studio"        -> nombre real del negocio (aparece ~6 veces)
-  2. "casabarberstudio"          -> handle real de Instagram / email
-  3. "Providencia · Santiago"    -> comuna/ciudad real
-  4. "Av. Providencia 1234..."   -> dirección real
-  5. "56900000000"               -> número real de WhatsApp
-  6. Horarios (sección #horarios) -> horario real
-  7. Antes de publicar en producción: reemplaza los "Reseña de ejemplo"
-     por reseñas reales del cliente (o conecta un widget de Google Reviews).
-     NO dejar reseñas inventadas como si fueran reales.
+  ============================================================================
+  PLANTILLA BARBERÍA · Studio web
+  Un solo archivo. Sin frameworks. Pensada primero para celular.
+
+  PARA PERSONALIZAR UN CLIENTE NUEVO (5 minutos):
+  1) Edita el bloque "CONFIGURACIÓN" que está justo abajo (negocio, WhatsApp,
+     horarios, barberos, servicios, precios, galería, reseñas).
+  2) Cambia <title>, meta description y og:* de este <head> (Ctrl+F "Casa Barber").
+  3) La foto del hero está en el <img id="heroImg"> del <body> (Ctrl+F heroImg).
+  4) Cuando el cliente ya sea real: pon  demo: false  en la configuración.
+     Eso oculta el cartel "Demo" y las reseñas de ejemplo.
+
+  FOTOS: se leen de la carpeta  Images/  (junto a este index.html).
+  Si no la encuentra, intenta con  imgFallback  (tu repo en GitHub).
+  Para la vista previa al compartir el link por WhatsApp, og:image debe pesar
+  menos de ~300 KB (ideal 1200x630).
+  ============================================================================
 -->
-<!DOCTYPE html><html class="scroll-smooth" lang="es"><head>
 <meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Casa Barber Studio — Salón de Belleza y Barbería Boutique</title>
-<!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
-<link href="https://fonts.googleapis.com" rel="preconnect">
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<!-- Material Symbols Outlined -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-<!-- Tailwind CSS CDN with plugins -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "on-secondary": "#ffffff",
-            "tertiary-fixed-dim": "#d1c5b6",
-            "surface-container": "#f1eee7",
-            "on-primary": "#ffffff",
-            "on-surface-variant": "#4a4640",
-            "surface-container-highest": "#e5e2db",
-            "surface-container-lowest": "#ffffff",
-            "surface": "#fcf9f2",
-            "inverse-surface": "#31312c",
-            "outline-variant": "#ccc5bd",
-            "error": "#ba1a1a",
-            "on-secondary-fixed-variant": "#5d4201",
-            "on-error-container": "#93000a",
-            "error-container": "#ffdad6",
-            "inverse-primary": "#cac6c4",
-            "tertiary-container": "#211b11",
-            "on-tertiary-fixed-variant": "#4d463a",
-            "primary-fixed-dim": "#cac6c4",
-            "on-tertiary-fixed": "#211b11",
-            "primary-container": "#1c1b1a",
-            "on-primary-fixed-variant": "#484645",
-            "on-primary-container": "#868382",
-            "tertiary": "#000000",
-            "primary-fixed": "#e6e2df",
-            "on-primary-fixed": "#1c1b1a",
-            "on-background": "#1c1c18",
-            "secondary-fixed-dim": "#e9c176",
-            "background": "#fcf9f2",
-            "on-surface": "#1c1c18",
-            "on-secondary-fixed": "#261900",
-            "surface-container-low": "#f6f3ec",
-            "secondary": "#775a19",
-            "on-tertiary": "#ffffff",
-            "secondary-container": "#fed488",
-            "secondary-fixed": "#ffdea5",
-            "outline": "#7b766f",
-            "inverse-on-surface": "#f3f0e9",
-            "tertiary-fixed": "#ede1d1",
-            "on-tertiary-container": "#8c8275",
-            "surface-variant": "#e5e2db",
-            "primary": "#000000",
-            "surface-dim": "#dcdad3",
-            "on-secondary-container": "#785a1a",
-            "surface-container-high": "#ebe8e1",
-            "surface-bright": "#fcf9f2",
-            "on-error": "#ffffff",
-            "surface-tint": "#605e5c",
-            "brand-gold": "#C5A059",
-            "brand-gold-hover": "#b08d48",
-            "brand-noir": "#1A1918"
-          },
-          borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
-          spacing: {
-            "space-sm": "0.75rem", "space-2xl": "6.5rem", "gutter-desktop": "2.5rem",
-            "space-xl": "4rem", "margin": "1.5rem", "gutter": "1.5rem",
-            "margin-desktop": "4rem", "space-lg": "2.25rem", "space-xs": "0.375rem", "space-md": "1.25rem"
-          },
-          fontFamily: {
-            subheading: ["Plus Jakarta Sans"], "headline-lg-mobile": ["Playfair Display"],
-            "body-md": ["Plus Jakarta Sans"], "label-caps": ["Plus Jakarta Sans"],
-            "display-hero-mobile": ["Playfair Display"], "label-md": ["Plus Jakarta Sans"],
-            "body-lg": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"],
-            "headline-sm": ["Playfair Display"], "headline-md": ["Playfair Display"],
-            "headline-lg": ["Playfair Display"], "display-hero": ["Playfair Display"]
-          },
-          fontSize: {
-            subheading: ["1.125rem", { lineHeight: "1.75rem", letterSpacing: "0.01em", fontWeight: "400" }],
-            "headline-lg-mobile": ["2rem", { lineHeight: "2.5rem", letterSpacing: "0em", fontWeight: "400" }],
-            "body-md": ["0.9375rem", { lineHeight: "1.6rem", letterSpacing: "0.01em", fontWeight: "400" }],
-            "label-caps": ["0.6875rem", { lineHeight: "1rem", letterSpacing: "0.18em", fontWeight: "600" }],
-            "display-hero-mobile": ["2.75rem", { lineHeight: "3.25rem", letterSpacing: "-0.01em", fontWeight: "400" }],
-            "label-md": ["0.875rem", { lineHeight: "1.25rem", letterSpacing: "0.03em", fontWeight: "500" }],
-            "body-lg": ["1.125rem", { lineHeight: "1.875rem", letterSpacing: "0.005em", fontWeight: "300" }],
-            "body-sm": ["0.8125rem", { lineHeight: "1.375rem", letterSpacing: "0.015em", fontWeight: "400" }],
-            "headline-sm": ["1.5rem", { lineHeight: "2rem", letterSpacing: "0em", fontWeight: "500" }],
-            "headline-md": ["2rem", { lineHeight: "2.5rem", letterSpacing: "-0.01em", fontWeight: "400" }],
-            "headline-lg": ["3rem", { lineHeight: "3.5rem", letterSpacing: "-0.015em", fontWeight: "400" }],
-            "display-hero": ["4.5rem", { lineHeight: "5rem", letterSpacing: "-0.02em", fontWeight: "400" }]
-          }
-        }
-      }
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Casa Barber Studio | Barbería en Providencia, Santiago · Reserva tu hora</title>
+<meta name="description" content="Barbería en Providencia, Santiago. Cortes, fades, barba y afeitado con toalla caliente. Reserva tu hora online en menos de un minuto.">
+<meta name="theme-color" content="#0b0b0c">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CL">
+<meta property="og:title" content="Casa Barber Studio · Barbería en Providencia">
+<meta property="og:description" content="Cortes, fades y barba. Reserva tu hora online en menos de un minuto.">
+<meta property="og:image" content="https://raw.githubusercontent.com/AndresPaginasweb/Casa-Barber-Studio/main/Images/barberia.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap">
+
+<script>
+/* ============================================================================
+   CONFIGURACIÓN  ·  lo único que necesitas editar para cada cliente
+   ============================================================================ */
+window.CONFIG = {
+
+  // true = muestra "Demo creado por Studio web" y las reseñas de ejemplo.
+  demo: true,
+
+  // Tu agencia (aparece solo en modo demo). Si pones whatsapp, el cartel es un link.
+  agency: { name: "Studio web", whatsapp: "" },
+
+  business: {
+    name: "Casa Barber Studio",
+    tagline: "Cortes, fades y barba con hora asegurada. Reserva en menos de un minuto.",
+    area: "Providencia, Santiago",              // se muestra bajo el nombre
+    address: "Av. Providencia 1234, Local 5",
+    locality: "Providencia",                    // para Google (datos estructurados)
+    region: "Región Metropolitana",
+    city: "Providencia, Santiago, Chile",
+    whatsapp: "56900000000",                    // con código de país, sin + ni espacios
+    phone: "+56900000000",                      // para el botón Llamar
+    phoneLabel: "+56 9 0000 0000",
+    instagram: "casabarberstudio",              // solo el usuario, sin @
+    tz: "America/Santiago",                     // zona horaria del local
+
+    // Horario de atención (formato 24 h). null = cerrado.
+    hours: {
+      lun: ["10:00", "20:00"],
+      mar: ["10:00", "20:00"],
+      mie: ["10:00", "20:00"],
+      jue: ["10:00", "20:00"],
+      vie: ["10:00", "20:00"],
+      sab: ["10:00", "18:00"],
+      dom: null
     }
-  </script>
+  },
+
+  // Reglas del sistema de reservas
+  booking: {
+    step: 30,            // minutos entre una hora y la siguiente
+    leadMinutes: 60,     // no se ofrecen horas con menos de 60 min de anticipación
+    daysAhead: 14,       // cuántos días hacia adelante se puede pedir
+    // Días en que el local completo no atiende (feriados, vacaciones). Formato AAAA-MM-DD
+    closedDates: []      // ej: ["2026-12-25", "2027-01-01"]
+  },
+
+  // Barberos. schedule: horario de cada uno. breaks: colación. blocked: horas o días tomados/bloqueados.
+  //   blocked acepta  "2026-10-20"  (día completo)  o  "2026-10-20 15:00-17:00"  (tramo)
+  barbers: [
+    {
+      id: "matias", name: "Matías Rojas", role: "Barbero · Cortes y fades",
+      photo: "profesional 1.png", pos: "50% 18%",
+      schedule: { lun: null, mar: ["10:00","20:00"], mie: ["10:00","20:00"], jue: ["10:00","20:00"], vie: ["10:00","20:00"], sab: ["10:00","18:00"], dom: null },
+      breaks: [["14:00","15:00"]],
+      blocked: []
+    },
+    {
+      id: "diego", name: "Diego Fuentes", role: "Barbero · Barba y afeitado",
+      photo: "profesional 2.png", pos: "50% 12%",
+      schedule: { lun: ["10:00","18:00"], mar: ["10:00","18:00"], mie: ["10:00","18:00"], jue: ["10:00","18:00"], vie: ["10:00","18:00"], sab: ["10:00","18:00"], dom: null },
+      breaks: [["13:30","14:30"]],
+      blocked: []
+    },
+    {
+      id: "nicolas", name: "Nicolás Vega", role: "Barbero · Diseños y color",
+      photo: "hombre 6.jpg", pos: "50% 30%",
+      schedule: { lun: ["12:00","20:00"], mar: ["12:00","20:00"], mie: ["12:00","20:00"], jue: null, vie: ["12:00","20:00"], sab: ["12:00","18:00"], dom: null },
+      breaks: [],
+      blocked: []
+    }
+  ],
+
+  // Servicios. price en pesos chilenos. duration en minutos. from:true muestra "Desde".
+  services: [
+    { id: "corte",     name: "Corte de pelo",        duration: 45,  price: 14000, note: "Clásico, fade o diseño" },
+    { id: "corte-barba", name: "Corte + barba",      duration: 60,  price: 20000, note: "Incluye toalla caliente", popular: true },
+    { id: "barba",     name: "Barba",                duration: 30,  price: 9000,  note: "Perfilado y arreglo" },
+    { id: "perfilado", name: "Perfilado de contorno",duration: 30,  price: 6000,  note: "Líneas y bordes" },
+    { id: "cejas",     name: "Diseño de cejas",      duration: 15,  price: 4000 },
+    { id: "nino",      name: "Corte niño",           duration: 30,  price: 10000, note: "Hasta 12 años" },
+    { id: "color",     name: "Color / decoloración", duration: 120, price: 45000, from: true },
+    { id: "facial",    name: "Limpieza facial",      duration: 45,  price: 15000 }
+  ],
+
+  // Fotos. Los nombres son los de tu carpeta Images/. Agrega o quita las que quieras.
+  imgBase: "Images/",
+  imgFallback: "https://raw.githubusercontent.com/AndresPaginasweb/Casa-Barber-Studio/main/Images/",
+  gallery: [
+    { src: "hombre 2.jpg", alt: "Barbero cortando el pelo con tijera a un cliente" },
+    { src: "barberia.jpg", alt: "Barbero afeitando a un cliente en un sillón clásico", pos: "30% 50%" }
+  ],
+
+  // Reseñas. demo:true = reseña de ejemplo (se ve con la etiqueta "Ejemplo" y se oculta si demo:false).
+  // Reemplázalas por reseñas reales del cliente (demo:false o sin el campo demo).
+  reviews: [
+    { demo: true, text: "Salí con el corte justo como lo pedí. Puntuales y muy prolijos con la barba.", author: "Nombre del cliente", when: "Hace 2 semanas" },
+    { demo: true, text: "Pedí la hora por la página en un minuto. Llegué y me atendieron a la hora exacta.", author: "Nombre del cliente", when: "Hace 1 mes" },
+    { demo: true, text: "La toalla caliente y el perfilado son otro nivel. Vuelvo cada mes.", author: "Nombre del cliente", when: "Hace 2 meses" }
+  ],
+
+  // Si el cliente tiene ficha de Google, completa esto y se mostrará la calificación real.
+  google: { rating: null, count: null, url: "" }   // ej: { rating: 4.9, count: 128, url: "https://g.page/..." }
+};
+
+/* Si una foto no carga, prueba con el respaldo y, si tampoco, la oculta. */
+function imgErr(el) {
+  if (!el.dataset.t) { el.dataset.t = "1"; el.src = window.CONFIG.imgFallback + encodeURIComponent(el.dataset.f); }
+  else { el.onerror = null; el.classList.add("noimg"); }
+}
+</script>
+
 <style>
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-      display: inline-block;
-      vertical-align: middle;
-      line-height: 1;
-    }
-    .material-symbols-fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    ::selection { background-color: #ffdea5; color: #1c1c18; }
-    html { scroll-behavior: smooth; }
-  </style>
+:root{
+  --bg:#0b0b0c; --card:#141416; --card2:#1b1b1e; --line:#2a2a2f;
+  --text:#f4f0e8; --muted:#a8a49c;
+  --accent:#ff4f2b; --accent-ink:#0b0b0c;
+  --ok:#3ddc84; --bad:#ff6b6b; --wa:#25d366;
+  --hdr:56px; --bar:68px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font:400 16px/1.5 "Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:clip;padding-bottom:calc(var(--bar) + env(safe-area-inset-bottom));-webkit-tap-highlight-color:transparent}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+img.noimg{visibility:hidden}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 20px}
+section[id]{scroll-margin-top:calc(var(--hdr) + 8px)}
+.sec{padding:56px 0}
+.sec + .sec{border-top:1px solid var(--line)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h2{font-size:clamp(1.75rem,7vw,2.6rem);line-height:1.02;font-weight:800;letter-spacing:-.02em;text-transform:uppercase;margin:8px 0 10px;text-wrap:balance}
+.lead{color:var(--muted);max-width:46ch}
+
+/* ---------- Botones ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 22px;border-radius:12px;font-weight:700;font-size:16px;line-height:1.1;text-align:center;transition:transform .15s,background .2s,border-color .2s}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover{background:#ff6445}
+.btn-ghost{border:1.5px solid rgba(244,240,232,.3);background:rgba(11,11,12,.35)}
+.btn-ghost:hover{border-color:var(--text)}
+.btn-wa{background:var(--wa);color:#06220f}
+.btn-block{width:100%}
+.btn[aria-disabled=true]{opacity:.55}
+
+/* ---------- Header ---------- */
+.hdr{position:sticky;top:0;z-index:50;height:var(--hdr);background:rgba(11,11,12,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hdr .wrap{height:100%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;letter-spacing:.03em;text-transform:uppercase;white-space:nowrap;min-width:0}
+.logo span{overflow:hidden;text-overflow:ellipsis}
+.pole{width:10px;height:24px;border-radius:5px;flex:none;background:repeating-linear-gradient(135deg,var(--accent) 0 4px,#f4f0e8 4px 8px)}
+.mbtn{width:44px;height:44px;display:grid;place-items:center;border-radius:10px;margin-right:-8px}
+.nav{display:none;align-items:center;gap:26px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.nav a{color:var(--muted);transition:color .2s}
+.nav a:hover{color:var(--text)}
+.hdr-cta{display:none;min-height:42px;padding:0 18px;font-size:14px}
+.menu{position:fixed;top:var(--hdr);left:0;right:0;z-index:49;background:var(--bg);border-bottom:1px solid var(--line);padding:4px 20px 14px;display:none}
+.menu.open{display:block}
+.menu a{display:flex;align-items:center;justify-content:space-between;min-height:54px;font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.01em;border-bottom:1px solid var(--line)}
+.menu a:last-child{border-bottom:0}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;min-height:clamp(480px,74svh,680px);display:flex;align-items:flex-end;isolation:isolate;overflow:hidden;background:#161618}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:32% 100%;z-index:-2;filter:blur(3px) saturate(.8) contrast(1.05);transform:scale(1.08)}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(11,11,12,.74) 0%,rgba(11,11,12,.68) 30%,rgba(11,11,12,.92) 78%,var(--bg) 100%)}
+.hero .wrap{padding-top:40px;padding-bottom:26px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border:1px solid rgba(244,240,232,.18);border-radius:99px;background:rgba(20,20,22,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-size:13px;font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
+.dot.on{background:var(--ok);box-shadow:0 0 0 4px rgba(61,220,132,.18)}
+.dot.off{background:var(--bad)}
+.hero .eyebrow{display:block;margin:18px 0 8px;color:#ffb09f}
+.hero h1{font-size:clamp(2.7rem,14vw,5.6rem);line-height:.9;font-weight:800;letter-spacing:-.035em;text-transform:uppercase;text-wrap:balance}
+.hero p.tag{font-size:17px;color:#dedad2;max-width:34ch;margin-top:16px}
+.ctas{display:grid;gap:10px;margin-top:24px}
+.micro{margin-top:14px;font-size:13px;color:var(--muted)}
+
+/* ---------- Acciones rápidas ---------- */
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px 0 0}
+.q{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-height:76px;padding:10px 4px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:12.5px;font-weight:600;line-height:1.15;text-align:center;text-wrap:balance}
+.q .ic{width:22px;height:22px;color:var(--accent)}
+.q:active{background:var(--card2)}
+
+/* ---------- Servicios ---------- */
+.svc{margin-top:22px;border-top:1px solid var(--line)}
+.svc li{border-bottom:1px solid var(--line)}
+.svcb{width:100%;display:grid;grid-template-columns:1fr auto;grid-template-areas:"n p" "m go";align-items:center;gap:3px 14px;padding:15px 2px;min-height:68px}
+.svcb .n{grid-area:n;font-weight:700;font-size:17px;line-height:1.25}
+.svcb .p{grid-area:p;font-weight:800;font-size:17px;text-align:right;white-space:nowrap}
+.svcb .m{grid-area:m;color:var(--muted);font-size:13.5px}
+.svcb .go{grid-area:go;display:inline-flex;align-items:center;justify-content:flex-end;gap:4px;color:var(--accent);font-size:13.5px;font-weight:700}
+.svcb .go .ic{width:16px;height:16px}
+.tag-p{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:99px;background:var(--accent);color:var(--accent-ink);font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;vertical-align:2px;font-style:normal}
+.svcb:active{background:var(--card)}
+.fine{margin-top:12px;font-size:13px;color:var(--muted)}
+
+/* ---------- Reserva ---------- */
+.book{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+.prog{display:flex;gap:6px;margin-bottom:16px}
+.prog i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.prog i.on{background:var(--accent)}
+.shead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:14px}
+.shead h3{font-size:21px;line-height:1.1;font-weight:800;text-transform:uppercase;letter-spacing:-.01em;outline:none}
+.shead small{color:var(--muted);font-size:13px;white-space:nowrap}
+.sum{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.sum button{max-width:100%;padding:8px 13px;border:1px solid var(--line);border-radius:99px;background:var(--card2);font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sum button::after{content:" ✎";color:var(--accent)}
+.opts{display:grid;gap:8px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;min-height:62px;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--card2);transition:border-color .15s,background .15s}
+.opt:active{transform:scale(.99)}
+.opt[aria-pressed=true]{border-color:var(--accent);background:rgba(255,79,43,.09)}
+.opt .t{flex:1;min-width:0}
+.opt .t b{display:block;font-weight:700;line-height:1.25}
+.opt .t span{display:block;color:var(--muted);font-size:13.5px;line-height:1.3}
+.opt .r{font-weight:800;white-space:nowrap}
+.ava{position:relative;width:46px;height:46px;border-radius:50%;overflow:hidden;background:var(--line);display:grid;place-items:center;flex:none;font-weight:800;font-size:18px;color:var(--muted)}
+.ava img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dchip{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:84px;padding:8px 2px;border:1.5px solid var(--line);border-radius:12px;background:var(--card2);text-align:center;line-height:1.15}
+.dchip small{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.dchip b{font-size:24px;font-weight:800;line-height:1.1}
+.dchip[aria-pressed=true]{border-color:var(--accent);background:rgba(255,79,43,.09)}
+.dchip:disabled{opacity:.4;cursor:not-allowed}
+.dchip:disabled small:last-child{font-size:11px;text-transform:none;letter-spacing:0}
+.grp{margin:16px 0 8px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.grp:first-child{margin-top:0}
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tbtn{min-height:50px;border:1.5px solid var(--line);border-radius:12px;background:var(--card2);font-weight:700;font-size:16px;text-align:center}
+.tbtn[aria-pressed=true]{border-color:var(--accent);background:rgba(255,79,43,.09)}
+.empty{padding:18px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);text-align:center}
+.nav2{display:flex;gap:10px;margin-top:16px}
+.nav2 .btn{min-height:46px;padding:0 18px;font-size:15px}
+.recap{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:14px}
+.recap div{display:flex;justify-content:space-between;gap:14px;padding:11px 14px;border-bottom:1px solid var(--line);font-size:15px}
+.recap div:last-child{border-bottom:0}
+.recap dt{color:var(--muted);flex:none}
+.recap dd{font-weight:700;text-align:right}
+.fld{display:block;margin-bottom:12px}
+.fld span{display:block;margin-bottom:6px;font-size:13px;font-weight:600;color:var(--muted)}
+.fld input{width:100%;min-height:50px;padding:0 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--card2);color:var(--text);font:inherit;font-size:16px}
+.fld input:focus{outline:none;border-color:var(--accent)}
+.err{margin:-4px 0 12px;font-size:14px;color:var(--bad)}
+.ok-ico{width:52px;height:52px;border-radius:50%;background:rgba(61,220,132,.14);color:var(--ok);display:grid;place-items:center;margin-bottom:14px}
+.ok-ico .ic{width:28px;height:28px;stroke-width:2.4}
+.stack{display:grid;gap:10px;margin-top:16px}
+
+/* ---------- Rails (equipo / galería / reseñas) ---------- */
+.rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:20px;margin:22px -20px 0;padding:0 20px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.rail::-webkit-scrollbar{display:none}
+.rail>*{flex:0 0 76%;max-width:340px;scroll-snap-align:start}
+.bc{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.ph{position:relative;aspect-ratio:4/5;background:var(--card2);display:grid;place-items:center;overflow:hidden}
+.ph .ini{font-size:72px;font-weight:800;color:var(--line)}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bi{padding:16px}
+.bi h3{font-size:19px;font-weight:800;line-height:1.15}
+.bi p{color:var(--muted);font-size:14px;margin:2px 0 14px}
+.gi{position:relative;aspect-ratio:4/5;border-radius:16px;overflow:hidden;background:var(--card2)}
+.gi img{width:100%;height:100%;object-fit:cover}
+.rv{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.stars{display:flex;gap:2px;color:#ffc04d}
+.stars .ic{fill:currentColor;stroke:none;width:16px;height:16px}
+.rv p{font-size:15.5px;line-height:1.55}
+.rv footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.ex{display:inline-block;padding:2px 9px;border:1px solid var(--line);border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.grat{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-weight:700}
+.grat .stars{display:inline-flex}
+
+/* ---------- Ubicación ---------- */
+.loc{display:grid;gap:22px;margin-top:22px}
+.addr{font-size:22px;font-weight:800;line-height:1.2}
+.addr small{display:block;margin-top:4px;font-size:15px;font-weight:500;color:var(--muted)}
+.btns{display:grid;gap:10px;margin-top:16px}
+.mapbox{position:relative;margin-top:16px;aspect-ratio:16/11;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card);display:grid;place-items:center}
+.mapbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.5) invert(.9) hue-rotate(180deg) contrast(.9)}
+.mapph{display:grid;gap:10px;justify-items:center;padding:18px;text-align:center;color:var(--muted);font-size:14px}
+.mapph .ic{width:30px;height:30px;color:var(--accent)}
+.hours{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+.hours li{display:flex;justify-content:space-between;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line);font-size:15px}
+.hours li:last-child{border-bottom:0}
+.hours li.today{background:rgba(255,79,43,.1);font-weight:700}
+.hours .c{color:var(--muted)}
+.hours h3{padding:14px 16px;border-bottom:1px solid var(--line);font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- Footer ---------- */
+.foot{border-top:1px solid var(--line);padding:36px 0 28px;color:var(--muted);font-size:14px}
+.foot .wrap{display:grid;gap:18px}
+.foot b.n{display:block;color:var(--text);font-size:17px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;margin-bottom:6px}
+.foot a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.foot .links{display:flex;flex-wrap:wrap;gap:6px 18px}
+.demo{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:99px;font-size:13px}
+
+/* ---------- Barra inferior móvil ---------- */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:60;display:grid;grid-template-columns:1fr 52px 52px;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(11,11,12,.95);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+.bar .btn{min-height:48px;padding:0 10px}
+.bar .sq{padding:0}
+body.kb .bar{display:none}
+
+/* ---------- Escritorio ---------- */
+@media (min-width:560px){
+  .ctas{grid-template-columns:auto auto;justify-content:start}
+  .tgrid{grid-template-columns:repeat(4,1fr)}
+}
+@media (min-width:860px){
+  body{padding-bottom:0}
+  .bar,.mbtn,.menu{display:none!important}
+  .nav,.hdr-cta{display:inline-flex}
+  .hero{min-height:640px}
+  .hero .wrap{padding-bottom:48px}
+  .sec{padding:84px 0}
+  .quick{grid-template-columns:repeat(4,minmax(0,200px));gap:12px;padding-top:18px}
+  .svc{display:grid;grid-template-columns:1fr 1fr;column-gap:48px}
+  .book{max-width:760px;padding:26px}
+  .dgrid{grid-template-columns:repeat(7,1fr)}
+  .rail{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:28px 0 0;padding:0;overflow:visible}
+  .rail>*{max-width:none}
+  .rail.gal{grid-template-columns:repeat(auto-fit,minmax(240px,340px))}
+  .loc{grid-template-columns:1.1fr 1fr;gap:48px;align-items:start}
+  .btns{grid-template-columns:1fr 1fr}
+  .foot .wrap{grid-template-columns:1.4fr 1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+}
+</style>
 </head>
-<body class="bg-background text-on-background font-body-md text-body-md antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed" style="background: radial-gradient(circle at 15% 15%, rgba(197, 160, 89, 0.04) 0%, transparent 45%), radial-gradient(circle at 85% 65%, rgba(197, 160, 89, 0.035) 0%, transparent 50%), linear-gradient(rgb(252, 249, 242) 0%, rgb(247, 243, 234) 35%, rgb(244, 238, 226) 70%, rgb(242, 235, 220) 100%); min-height: 100vh;">
 
-<!-- =========================================================================
-     1. HEADER / NAVEGACIÓN FIJA
-     ========================================================================= -->
-<header class="sticky top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm transition-all duration-300 ease-out">
-<div class="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center h-20">
-<a class="group flex flex-col items-start focus:outline-none" href="#">
-<span class="text-headline-sm font-headline-sm tracking-tight text-primary uppercase font-bold">Casa Barber Studio</span>
-<span class="text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant text-[10px] mt-0.5">Providencia · Santiago</span>
-</a>
-<nav class="hidden lg:flex items-center space-x-8">
-<a class="text-secondary font-semibold border-b border-secondary pb-1 text-label-caps font-label-caps uppercase tracking-wider transition-colors duration-200" href="#servicios">Servicios</a>
-<a class="text-on-surface-variant hover:text-primary text-label-caps font-label-caps uppercase tracking-wider transition-colors duration-200" href="#nosotros">Nosotros</a>
-<a class="text-on-surface-variant hover:text-primary text-label-caps font-label-caps uppercase tracking-wider transition-colors duration-200" href="#equipo">Equipo</a>
-<a class="text-on-surface-variant hover:text-primary text-label-caps font-label-caps uppercase tracking-wider transition-colors duration-200" href="#galeria">Galería</a>
-<a class="text-on-surface-variant hover:text-primary text-label-caps font-label-caps uppercase tracking-wider transition-colors duration-200" href="#ubicacion">Ubicación</a>
-<a class="text-on-surface-variant hover:text-primary text-label-caps font-label-caps uppercase tracking-wider transition-colors duration-200" href="#testimonios">Reseñas</a>
-<a class="text-on-surface-variant hover:text-primary text-label-caps font-label-caps uppercase tracking-wider transition-colors duration-200" href="#horarios">Horarios</a>
-</nav>
-<div class="flex items-center space-x-4">
-<a class="inline-flex items-center justify-center space-x-2 bg-brand-gold hover:bg-brand-gold-hover text-surface-container-lowest px-6 py-3 transition-colors duration-300 uppercase text-label-caps font-label-caps tracking-widest font-semibold shadow-sm" href="#reserva">
-<span class="material-symbols-outlined text-[18px]">calendar_month</span>
-<span>Reservar hora</span>
-</a>
-</div>
-</div>
+<body>
+<!-- Íconos -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5A8.5 8.5 0 1 1 21 11.5z"/><path d="M9.2 8.6c0 3.3 2.9 6.2 6.2 6.2l.9-1.7-2.2-1-1 .9a3.8 3.8 0 0 1-2-2l.9-1-1-2.2z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".9" fill="currentColor"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2 6.3 20.3l1.2-6.4L2.8 9.5l6.4-.8z"/></symbol>
+</defs></svg>
+
+<!-- ============ HEADER ============ -->
+<header class="hdr">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Inicio"><i class="pole"></i><span data-t="name"></span></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#servicios">Servicios</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#galeria">Galería</a>
+      <a href="#resenas" data-needs="reviews">Reseñas</a>
+      <a href="#ubicacion">Ubicación</a>
+    </nav>
+    <a class="btn btn-primary hdr-cta" href="#reservar">Reservar hora</a>
+    <button class="mbtn" id="mbtn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><svg class="ic"><use href="#i-menu"/></svg></button>
+  </div>
 </header>
+<nav class="menu" id="menu" aria-label="Menú">
+  <a href="#servicios">Servicios y precios <svg class="ic"><use href="#i-arrow"/></svg></a>
+  <a href="#reservar">Reservar hora <svg class="ic"><use href="#i-arrow"/></svg></a>
+  <a href="#equipo">Equipo <svg class="ic"><use href="#i-arrow"/></svg></a>
+  <a href="#galeria">Galería <svg class="ic"><use href="#i-arrow"/></svg></a>
+  <a href="#resenas" data-needs="reviews">Reseñas <svg class="ic"><use href="#i-arrow"/></svg></a>
+  <a href="#ubicacion">Ubicación y horarios <svg class="ic"><use href="#i-arrow"/></svg></a>
+</nav>
 
-<main>
-<!-- =========================================================================
-       2. HERO
-       ========================================================================= -->
-<section class="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-surface-container-low">
-<div class="absolute inset-0 z-0">
-<img class="w-full h-full object-cover object-center filter brightness-95" src="https://raw.githubusercontent.com/AndresPaginasweb/Casa-Barber-Studio/main/Images/barberia.jpg" alt="Interior de Casa Barber Studio en Barrio Bellavista, Santiago">
-<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/50 to-primary/75 backdrop-blur-[1px]"></div>
-</div>
-<div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 py-24 text-center flex flex-col items-center">
-<div class="inline-flex items-center space-x-3 mb-6 px-4 py-1.5 border border-brand-gold/40 bg-brand-noir/70 backdrop-blur-md shadow-sm">
-<span class="w-1.5 h-1.5 bg-brand-gold"></span>
-<span class="text-label-caps font-label-caps uppercase text-surface tracking-[0.25em]">Barrio Bellavista · Santiago, Chile</span>
-<span class="w-1.5 h-1.5 bg-brand-gold"></span>
-</div>
-<h1 class="hidden md:block text-display-hero font-display-hero text-surface-container-lowest tracking-tight max-w-5xl mb-6 drop-shadow-md">Casa Barber Studio</h1>
-<h1 class="md:hidden text-display-hero-mobile font-display-hero-mobile text-surface-container-lowest tracking-tight mb-6 drop-shadow-md">Casa Barber Studio</h1>
-<p class="font-body-lg text-body-lg md:text-xl text-surface/90 max-w-2xl font-light leading-relaxed mb-10 drop-shadow-sm">Descubre el cuidado experto que tu imagen merece. Reserva una experiencia diseñada para realzar tu mejor versión.</p>
-<div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
-<a class="w-full sm:w-auto inline-flex items-center justify-center space-x-3 bg-brand-gold hover:bg-brand-gold-hover text-surface-container-lowest px-8 py-4 uppercase text-label-caps font-label-caps tracking-widest font-semibold transition-all duration-300 shadow-lg" href="#reserva">
-<span class="material-symbols-outlined text-lg">calendar_month</span>
-<span>Reservar hora</span>
-</a>
-<a class="w-full sm:w-auto inline-flex items-center justify-center space-x-2 border border-surface/80 bg-surface/10 hover:bg-surface hover:text-primary text-surface backdrop-blur-sm px-8 py-4 uppercase text-label-caps font-label-caps tracking-widest font-semibold transition-colors duration-300" href="#servicios">
-<span>Ver servicios</span>
-</a>
-</div>
-<div class="mt-16 pt-8 border-t border-outline-variant/30 flex flex-wrap justify-center items-center gap-6 md:gap-12 text-surface/80">
-<div class="flex items-center space-x-2">
-<span class="material-symbols-outlined text-brand-gold text-base">workspace_premium</span>
-<span class="text-label-caps font-label-caps uppercase tracking-wider text-xs">Atención Exclusiva</span>
-</div>
-<span class="hidden sm:inline-block text-outline-variant">·</span>
-<div class="flex items-center space-x-2">
-<span class="material-symbols-outlined text-brand-gold text-base">spa</span>
-<span class="text-label-caps font-label-caps uppercase tracking-wider text-xs">Productos Premium</span>
-</div>
-<span class="hidden sm:inline-block text-outline-variant">·</span>
-<div class="flex items-center space-x-2">
-<span class="material-symbols-outlined text-brand-gold text-base">location_on</span>
-<span class="text-label-caps font-label-caps uppercase tracking-wider text-xs">Santiago, Chile</span>
-</div>
-</div>
-</div>
-<div class="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none z-10"></div>
+<main id="top">
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <!-- Foto del hero: cambia el nombre del archivo aquí si hace falta -->
+  <img id="heroImg" src="Images/barberia.jpg" data-f="barberia.jpg" onerror="imgErr(this)" alt="Barbero afeitando a un cliente en una barbería con sillones clásicos" fetchpriority="high" decoding="async">
+  <div class="wrap">
+    <span class="chip" id="status" role="status"><i class="dot"></i><span>Consultando horario…</span></span>
+    <span class="eyebrow" id="eyebrow"></span>
+    <h1 data-t="name"></h1>
+    <p class="tag" data-t="tagline"></p>
+    <div class="ctas">
+      <a class="btn btn-primary" href="#reservar"><svg class="ic"><use href="#i-cal"/></svg>Reservar hora</a>
+      <a class="btn btn-ghost" data-link="waHello" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg>Escribir por WhatsApp</a>
+    </div>
+    <p class="micro">Sin esperas · Confirmación por WhatsApp</p>
+  </div>
 </section>
 
-<!-- =========================================================================
-       3. BARRA DE CONFIANZA / RATING
-       ========================================================================= -->
-<section class="bg-background/90 py-8 border-b border-outline-variant/20 relative z-10" style="background: linear-gradient(90deg, rgba(246, 243, 236, 0.95) 0%, rgba(254, 251, 245, 0.98) 50%, rgba(246, 243, 236, 0.95) 100%); box-shadow: rgba(119, 90, 25, 0.04) 0px 4px 20px -2px;">
-<div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4">
-<div class="flex items-center space-x-4">
-<div class="w-9 h-9 flex items-center justify-center bg-surface border border-outline-variant/40 shadow-xs">
-<svg class="w-5 h-5" viewBox="0 0 24 24">
-<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
-<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
-<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"></path>
-<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"></path>
-</svg>
+<div class="wrap">
+  <div class="quick" aria-label="Acciones rápidas">
+    <a class="q" data-link="tel"><svg class="ic"><use href="#i-phone"/></svg>Llamar</a>
+    <a class="q" data-link="waHello" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg>WhatsApp</a>
+    <a class="q" data-link="maps" target="_blank" rel="noopener"><svg class="ic"><use href="#i-pin"/></svg>Cómo llegar</a>
+    <a class="q" data-link="ig" target="_blank" rel="noopener"><svg class="ic"><use href="#i-ig"/></svg>Instagram</a>
+  </div>
 </div>
-<div>
-<div class="flex items-center space-x-1.5">
-<span class="font-bold text-on-surface text-base tracking-tight">4,9</span>
-<div class="flex text-amber-500 text-sm">
-<span class="material-symbols-outlined text-amber-500 text-base material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-amber-500 text-base material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-amber-500 text-base material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-amber-500 text-base material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-amber-500 text-base material-symbols-fill">star</span>
-</div>
-</div>
-<p class="text-body-sm font-body-sm text-on-surface-variant text-xs">Google Customer Reviews</p>
-</div>
-</div>
-<div class="text-center md:text-left">
-<p class="text-body-md font-body-md text-on-surface font-medium">Aquí se mostrará <span class="font-bold text-secondary">tu calificación real de Google</span>, cuando conectemos tu ficha de negocio</p>
-</div>
-<div class="flex items-center space-x-2 border border-outline-variant/60 px-4 py-1.5 bg-surface">
-<span class="material-symbols-outlined text-brand-gold text-sm">verified</span>
-<span class="text-label-caps font-label-caps uppercase tracking-widest text-on-surface text-[11px] font-semibold">excelencia</span>
-</div>
-</div>
+
+<!-- ============ SERVICIOS ============ -->
+<section class="sec" id="servicios">
+  <div class="wrap">
+    <span class="eyebrow">Servicios y precios</span>
+    <h2>Elige tu servicio</h2>
+    <p class="lead">Toca uno y sigue con la reserva. Valores referenciales.</p>
+    <ul class="svc" id="svcList"></ul>
+  </div>
 </section>
 
-<!-- =========================================================================
-       4. SOBRE NOSOTROS
-       ========================================================================= -->
-<section class="py-24 max-w-7xl mx-auto px-6 md:px-12" id="nosotros" style="position: relative; background: radial-gradient(circle at 75% 40%, rgba(197, 160, 89, 0.07) 0%, transparent 60%), radial-gradient(circle at 20% 80%, rgba(229, 226, 219, 0.4) 0%, transparent 50%);">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-<div class="lg:col-span-6 space-y-6">
-<div class="inline-flex items-center space-x-2">
-<span class="h-px w-8 bg-brand-gold"></span>
-<span class="text-label-caps font-label-caps uppercase text-secondary tracking-widest text-xs font-semibold">Filosofía &amp; Espacio</span>
-</div>
-<h2 class="text-headline-lg font-headline-lg text-primary tracking-tight">Belleza capilar, llevada a la precisión.</h2>
-<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">Un espacio privado en el barrio donde la técnica, el diseño y el bienestar se encuentran.</p>
-<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">Diagnóstico personalizado · Técnica artesanal · Atención exclusiva</p>
-<blockquote class="border-l-2 border-brand-gold pl-6 py-2 my-8">
-<p class="font-headline-sm text-headline-sm italic text-on-surface leading-snug">"Creemos en la belleza auténtica, la precisión técnica y una experiencia de relajación total."</p>
-<footer class="mt-3 text-label-caps font-label-caps uppercase tracking-widest text-on-surface-variant text-xs">— Casa Barber Studio</footer>
-</blockquote>
-<div class="pt-4 flex items-center space-x-8">
-<div>
-<p class="font-headline-md text-headline-md font-light text-primary">12+</p>
-<p class="text-label-caps font-label-caps uppercase text-on-surface-variant text-[11px] tracking-wider">Años de experiencia</p>
-</div>
-<div class="w-px h-10 bg-outline-variant/40"></div>
-<div>
-<p class="font-headline-md text-headline-md font-light text-primary">100%</p>
-<p class="text-label-caps font-label-caps uppercase text-on-surface-variant text-[11px] tracking-wider">Atención personalizada</p>
-</div>
-<div class="w-px h-10 bg-outline-variant/40"></div>
-<div>
-<p class="font-headline-md text-headline-md font-light text-primary">Providencia</p>
-<p class="text-label-caps font-label-caps uppercase text-on-surface-variant text-[11px] tracking-wider">Santiago, Chile</p>
-</div>
-</div>
-</div>
-<div class="lg:col-span-6 relative">
-<div class="relative z-10 border border-outline-variant/40 bg-surface-container-lowest p-3 shadow-md">
-<div class="aspect-[4/5] w-full overflow-hidden bg-surface-container">
-<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out" alt="Interior privado de Casa Barber Studio en Barrio Bellavista, Santiago" src="https://raw.githubusercontent.com/AndresPaginasweb/Casa-Barber-Studio/main/Images/pelo%20de%20chica.png">
-</div>
-</div>
-<div class="absolute -bottom-6 -right-6 w-full h-full border border-secondary/30 -z-0 hidden sm:block"></div>
-</div>
-</div>
+<!-- ============ RESERVA ============ -->
+<section class="sec" id="reservar">
+  <div class="wrap">
+    <span class="eyebrow">Reserva online</span>
+    <h2>Pide tu hora</h2>
+    <p class="lead">Elige servicio, barbero y horario. Te confirmamos por WhatsApp.</p>
+    <div class="book" id="book" aria-live="polite"></div>
+  </div>
 </section>
 
-<!-- =========================================================================
-       5. SERVICIOS
-       ========================================================================= -->
-<section class="py-24 bg-surface-container-low border-t border-outline-variant/30" id="servicios" style="background: radial-gradient(circle at 50% 12%, rgba(197, 160, 89, 0.08) 0%, transparent 65%), linear-gradient(rgb(245, 239, 227) 0%, rgb(238, 230, 214) 50%, rgb(244, 238, 226) 100%);">
-<div class="max-w-7xl mx-auto px-6 md:px-12">
-<div class="text-center max-w-3xl mx-auto mb-16">
-<span class="text-label-caps font-label-caps uppercase text-secondary tracking-widest text-xs font-semibold block mb-3">Carta de Excelencia</span>
-<h2 class="text-headline-lg font-headline-lg text-primary tracking-tight mb-4">Nuestra Carta de Servicios</h2>
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-<div class="bg-surface-container-lowest border border-outline-variant/40 p-8 flex flex-col justify-between hover:border-brand-gold transition-colors duration-300">
-<div>
-<div class="flex items-center justify-between mb-6">
-<span class="material-symbols-outlined text-3xl text-secondary">content_cut</span>
-<span class="text-label-caps font-label-caps text-on-surface-variant tracking-widest text-[10px] uppercase">01 / Signature</span>
-</div>
-<h3 class="text-headline-sm font-headline-sm text-primary mb-3">Cabello</h3>
-<p class="text-body-sm font-body-sm text-on-surface-variant leading-relaxed mb-4">Cortes de autor, coloración experta, balayage y rituales de restauración capilar.</p>
-</div>
-<div class="pt-4 border-t border-outline-variant/20 flex justify-between items-center text-xs">
-<span class="text-on-surface-variant font-medium">Diagnóstico capilar incluido</span>
-<a class="text-secondary hover:text-brand-gold font-semibold uppercase text-label-caps" href="#reserva">Agendar →</a>
-</div>
-</div>
-<div class="bg-surface-container-lowest border border-outline-variant/40 p-8 flex flex-col justify-between hover:border-brand-gold transition-colors duration-300">
-<div>
-<div class="flex items-center justify-between mb-6">
-<span class="material-symbols-outlined text-3xl text-secondary">face</span>
-<span class="text-label-caps font-label-caps text-on-surface-variant tracking-widest text-[10px] uppercase">02 / Gentleman</span>
-</div>
-<h3 class="text-headline-sm font-headline-sm text-primary mb-3">Barbería</h3>
-<p class="text-body-sm font-body-sm text-on-surface-variant leading-relaxed mb-4">Corte masculino de precisión, perfilado de barba y afeitado tradicional.</p>
-</div>
-<div class="pt-4 border-t border-outline-variant/20 flex justify-between items-center text-xs">
-<span class="text-on-surface-variant font-medium">Ritual toalla caliente</span>
-<a class="text-secondary hover:text-brand-gold font-semibold uppercase text-label-caps" href="#reserva">Agendar →</a>
-</div>
-</div>
-<div class="bg-surface-container-lowest border border-outline-variant/40 p-8 flex flex-col justify-between hover:border-brand-gold transition-colors duration-300">
-<div>
-<div class="flex items-center justify-between mb-6">
-<span class="material-symbols-outlined text-3xl text-secondary">dry_cleaning</span>
-<span class="text-label-caps font-label-caps text-on-surface-variant tracking-widest text-[10px] uppercase">03 / Care</span>
-</div>
-<h3 class="text-headline-sm font-headline-sm text-primary mb-3">Manos y Pies</h3>
-<p class="text-body-sm font-body-sm text-on-surface-variant leading-relaxed mb-4">Manicura y pedicura clínica y estética con acabados de larga duración.</p>
-</div>
-<div class="pt-4 border-t border-outline-variant/20 flex justify-between items-center text-xs">
-<span class="text-on-surface-variant font-medium">Técnica rusa esterilizada</span>
-<a class="text-secondary hover:text-brand-gold font-semibold uppercase text-label-caps" href="#reserva">Agendar →</a>
-</div>
-</div>
-<div class="bg-surface-container-lowest border border-outline-variant/40 p-8 flex flex-col justify-between hover:border-brand-gold transition-colors duration-300">
-<div>
-<div class="flex items-center justify-between mb-6">
-<span class="material-symbols-outlined text-3xl text-secondary">brush</span>
-<span class="text-label-caps font-label-caps text-on-surface-variant tracking-widest text-[10px] uppercase">04 / Glam</span>
-</div>
-<h3 class="text-headline-sm font-headline-sm text-primary mb-3">Maquillaje</h3>
-<p class="text-body-sm font-body-sm text-on-surface-variant leading-relaxed mb-4">Maquillaje profesional para eventos sociales, sesiones y editoriales.</p>
-</div>
-<div class="pt-4 border-t border-outline-variant/20 flex justify-between items-center text-xs">
-<span class="text-on-surface-variant font-medium">Cosmética de alta gama</span>
-<a class="text-secondary hover:text-brand-gold font-semibold uppercase text-label-caps" href="#reserva">Agendar →</a>
-</div>
-</div>
-<div class="bg-surface-container-lowest border border-outline-variant/40 p-8 flex flex-col justify-between hover:border-brand-gold transition-colors duration-300">
-<div>
-<div class="flex items-center justify-between mb-6">
-<span class="material-symbols-outlined text-3xl text-secondary">diamond</span>
-<span class="text-label-caps font-label-caps text-on-surface-variant tracking-widest text-[10px] uppercase">05 / Atelier</span>
-</div>
-<h3 class="text-headline-sm font-headline-sm text-primary mb-3">Eventos &amp; Novias</h3>
-<p class="text-body-sm font-body-sm text-on-surface-variant leading-relaxed mb-4">Estilismo integral y peinados exclusivos para novias y celebraciones.</p>
-</div>
-<div class="pt-4 border-t border-outline-variant/20 flex justify-between items-center text-xs">
-<span class="text-on-surface-variant font-medium">Prueba y diseño previo</span>
-<a class="text-secondary hover:text-brand-gold font-semibold uppercase text-label-caps" href="#reserva">Agendar →</a>
-</div>
-</div>
-<div class="bg-surface-container-lowest border border-outline-variant/40 p-8 flex flex-col justify-between hover:border-brand-gold transition-colors duration-300">
-<div>
-<div class="flex items-center justify-between mb-6">
-<span class="material-symbols-outlined text-3xl text-secondary">auto_awesome</span>
-<span class="text-label-caps font-label-caps text-on-surface-variant tracking-widest text-[10px] uppercase">06 / Dermal</span>
-</div>
-<h3 class="text-headline-sm font-headline-sm text-primary mb-3">Estética</h3>
-<p class="text-body-sm font-body-sm text-on-surface-variant leading-relaxed mb-4">Depilación facial de precisión y tratamientos de bienestar facial.</p>
-</div>
-<div class="pt-4 border-t border-outline-variant/20 flex justify-between items-center text-xs">
-<span class="text-on-surface-variant font-medium">Visagismo y armonización</span>
-<a class="text-secondary hover:text-brand-gold font-semibold uppercase text-label-caps" href="#reserva">Agendar →</a>
-</div>
-</div>
-</div>
-
-<!-- 15 Featured Services Matrix -->
-<div class="mb-14">
-<div class="flex items-center justify-between mb-8 pb-4 border-b border-outline-variant/30">
-<div>
-<h3 class="text-headline-sm font-headline-sm text-primary">Servicios Populares</h3>
-<p class="text-body-sm font-body-sm text-on-surface-variant">Selección de los rituales más solicitados por nuestros clientes habituales</p>
-</div>
-<span class="text-label-caps font-label-caps uppercase text-secondary tracking-wider text-xs hidden sm:block">Valores de Referencia</span>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-<div class="bg-surface border border-outline-variant/30 p-4 flex justify-between items-center hover:border-secondary transition-colors">
-<div><p class="font-medium text-on-surface text-sm">Corte de cabello personalizado</p><span class="text-[10px] uppercase tracking-wider text-secondary font-semibold">Signature Protocol</span></div>
-<span class="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1">Desde $28.000</span>
-</div>
-<div class="bg-surface border border-outline-variant/30 p-4 flex justify-between items-center hover:border-secondary transition-colors">
-<div><p class="font-medium text-on-surface text-sm">Balayage &amp; iluminaciones</p><span class="text-[10px] uppercase tracking-wider text-secondary font-semibold">Coloración de Autor</span></div>
-<span class="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1">Desde $75.000</span>
-</div>
-<div class="bg-surface border border-outline-variant/30 p-4 flex justify-between items-center hover:border-secondary transition-colors">
-<div><p class="font-medium text-on-surface text-sm">Tratamiento de keratina</p><span class="text-[10px] uppercase tracking-wider text-secondary font-semibold">Sellado Orgánico</span></div>
-<span class="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1">Desde $65.000</span>
-</div>
-<div class="bg-surface border border-outline-variant/30 p-4 flex justify-between items-center hover:border-secondary transition-colors">
-<div><p class="font-medium text-on-surface text-sm">Maquillaje de fiesta</p><span class="text-[10px] uppercase tracking-wider text-secondary font-semibold">Social Glam</span></div>
-<span class="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1">Desde $40.000</span>
-</div>
-<div class="bg-surface border border-outline-variant/30 p-4 flex justify-between items-center hover:border-secondary transition-colors">
-<div><p class="font-medium text-on-surface text-sm">Peinado para eventos</p><span class="text-[10px] uppercase tracking-wider text-secondary font-semibold">Alta Costura</span></div>
-<span class="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1">Desde $35.000</span>
-</div>
-<div class="bg-surface border border-outline-variant/30 p-4 flex justify-between items-center hover:border-secondary transition-colors">
-<div><p class="font-medium text-on-surface text-sm">Manicura y pedicura</p><span class="text-[10px] uppercase tracking-wider text-secondary font-semibold">Dúo Spa Integral</span></div>
-<span class="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1">Desde $38.000</span>
-</div>
-<div class="bg-surface border border-outline-variant/30 p-4 flex justify-between items-center hover:border-secondary transition-colors">
-<div><p class="font-medium text-on-surface text-sm">Diseño de cejas</p><span class="text-[10px] uppercase tracking-wider text-secondary font-semibold">Visagismo Facial</span></div>
-<span class="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1">Desde $18.000</span>
-</div>
-<div class="bg-surface border border-outline-variant/30 p-4 flex justify-between items-center hover:border-secondary transition-colors">
-<div><p class="font-medium text-on-surface text-sm">Tratamiento capilar anti-frizz</p><span class="text-[10px] uppercase tracking-wider text-secondary font-semibold">Control Costero</span></div>
-<span class="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1">Desde $48.000</span>
-</div>
-<div class="bg-surface border border-outline-variant/30 p-4 flex justify-between items-center hover:border-secondary transition-colors">
-<div><p class="font-medium text-on-surface text-sm">Afeitado tradicional</p><span class="text-[10px] uppercase tracking-wider text-secondary font-semibold">Ritual Toalla Caliente</span></div>
-<span class="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1">Desde $20.000</span>
-</div>
-<div class="bg-surface border border-outline-variant/30 p-4 flex justify-between items-center hover:border-secondary transition-colors">
-<div><p class="font-medium text-on-surface text-sm">Barbería moderna</p><span class="text-[10px] uppercase tracking-wider text-secondary font-semibold">Corte + Barba</span></div>
-<span class="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1">Desde $26.000</span>
-</div>
-<div class="bg-surface border border-outline-variant/30 p-4 flex justify-between items-center hover:border-secondary transition-colors">
-<div><p class="font-medium text-on-surface text-sm">Tratamiento de hidratación profunda</p><span class="text-[10px] uppercase tracking-wider text-secondary font-semibold">Nutrición Celular</span></div>
-<span class="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1">Desde $32.000</span>
-</div>
-<div class="bg-surface border border-outline-variant/30 p-4 flex justify-between items-center hover:border-secondary transition-colors">
-<div><p class="font-medium text-on-surface text-sm">Peinado y maquillaje de novia</p><span class="text-[10px] uppercase tracking-wider text-secondary font-semibold">Atelier Nupcial</span></div>
-<span class="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1">Desde $120.000</span>
-</div>
-<div class="bg-surface border border-outline-variant/30 p-4 flex justify-between items-center hover:border-secondary transition-colors">
-<div><p class="font-medium text-on-surface text-sm">Depilación facial con cera</p><span class="text-[10px] uppercase tracking-wider text-secondary font-semibold">Bienestar Dermal</span></div>
-<span class="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1">Desde $12.000</span>
-</div>
-<div class="bg-surface border border-outline-variant/30 p-4 flex justify-between items-center hover:border-secondary transition-colors">
-<div><p class="font-medium text-on-surface text-sm">Alisado y planchado profesional</p><span class="text-[10px] uppercase tracking-wider text-secondary font-semibold">Acabado Editorial</span></div>
-<span class="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1">Desde $30.000</span>
-</div>
-<div class="bg-surface border border-outline-variant/30 p-4 flex justify-between items-center hover:border-secondary transition-colors">
-<div><p class="font-medium text-on-surface text-sm">Tratamiento reconstructor para cabello dañado</p><span class="text-[10px] uppercase tracking-wider text-secondary font-semibold">Terapia Molecular</span></div>
-<span class="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1">Desde $55.000</span>
-</div>
-</div>
-</div>
-
-<div class="bg-surface border border-outline-variant/40 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-<div class="flex items-center space-x-4">
-<div class="w-12 h-12 bg-secondary-fixed/40 border border-secondary/30 flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-secondary">menu_book</span>
-</div>
-<div>
-<span class="inline-block bg-primary text-surface px-2.5 py-0.5 text-[10px] font-label-caps uppercase tracking-wider mb-1">Catálogo Extendido</span>
-<p class="text-body-md font-body-md text-on-surface font-medium">Contamos con más de 49 servicios disponibles. Consulta el catálogo completo al reservar tu hora.</p>
-</div>
-</div>
-<a class="shrink-0 inline-flex items-center justify-center space-x-2 bg-brand-gold hover:bg-brand-gold-hover text-surface-container-lowest px-8 py-3.5 uppercase text-label-caps font-label-caps tracking-widest font-semibold transition-colors shadow-sm" href="#reserva">
-<span class="material-symbols-outlined text-sm">calendar_month</span>
-<span>Reservar hora</span>
-</a>
-</div>
-</div>
+<!-- ============ EQUIPO ============ -->
+<section class="sec" id="equipo">
+  <div class="wrap">
+    <span class="eyebrow">El equipo</span>
+    <h2>Tus barberos</h2>
+    <p class="lead">Elige con quién quieres atenderte o deja que te asignemos al primero disponible.</p>
+    <div class="rail" id="teamRail"></div>
+  </div>
 </section>
 
-<!-- =========================================================================
-       6. EQUIPO
-       ========================================================================= -->
-<section class="py-24 max-w-7xl mx-auto px-6 md:px-12 border-t border-outline-variant/30" id="equipo" style="position: relative; background: radial-gradient(circle at 50% 20%, rgba(197, 160, 89, 0.12) 0%, transparent 55%), radial-gradient(circle at 18% 75%, rgba(197, 160, 89, 0.07) 0%, transparent 50%), radial-gradient(circle at 82% 75%, rgba(197, 160, 89, 0.07) 0%, transparent 50%), linear-gradient(rgb(250, 246, 238) 0%, rgb(244, 238, 226) 50%, rgb(248, 244, 236) 100%);">
-<div class="relative max-w-7xl mx-auto px-6 md:px-12">
-<div class="text-center max-w-2xl mx-auto mb-16 relative z-10">
-<div class="inline-flex items-center space-x-3 mb-3 px-4 py-1 border border-brand-gold/40 bg-surface/90 backdrop-blur-md rounded-full shadow-xs">
-<span class="w-1.5 h-1.5 rounded-full bg-brand-gold"></span>
-<span class="text-label-caps font-label-caps uppercase text-secondary tracking-[0.25em] text-xs font-semibold">Equipo de Autor</span>
-<span class="w-1.5 h-1.5 rounded-full bg-brand-gold"></span>
-</div>
-<h2 class="text-headline-lg font-headline-lg text-primary tracking-tight mb-3">Artistas al Cuidado de tu Imagen</h2>
-<p class="font-body-md text-body-md text-on-surface-variant font-light max-w-lg mx-auto">Precisión técnica, sensibilidad estética y diseño personalizado en cada detalle.</p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto relative z-10">
-<div class="group relative bg-surface-container-lowest/90 border border-brand-gold/30 hover:border-brand-gold/70 p-4 transition-all duration-500 hover:shadow-2xl shadow-lg">
-<div class="relative aspect-[3/4] overflow-hidden bg-surface-container mb-6 border border-outline-variant/30">
-<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105" src="https://raw.githubusercontent.com/AndresPaginasweb/Casa-Barber-Studio/main/Images/profesional%201.png" alt="Barbero Senior — Master Barber & Grooming Specialist">
-<div class="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-40 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none"></div>
-<div class="absolute top-4 right-4 bg-primary-container/85 backdrop-blur-md px-3.5 py-1.5 border border-brand-gold/50 shadow-md text-label-caps font-label-caps text-[10px] uppercase tracking-widest text-secondary-fixed font-semibold">Especialista en Fades &amp; Barba</div>
-</div>
-<div class="px-4 pb-3 text-center">
-<h3 class="text-headline-sm font-headline-sm text-primary mb-1.5 tracking-tight group-hover:text-secondary transition-colors duration-300">Barbero Senior</h3>
-<p class="text-label-caps font-label-caps uppercase text-secondary tracking-widest text-xs font-semibold">Master Barber &amp; Grooming Specialist</p>
-<div class="mt-3 mx-auto w-12 h-px bg-brand-gold/40 group-hover:w-20 transition-all duration-500"></div>
-</div>
-</div>
-<div class="group relative bg-surface-container-lowest/90 border border-brand-gold/30 hover:border-brand-gold/70 p-4 transition-all duration-500 hover:shadow-2xl shadow-lg">
-<div class="relative aspect-[3/4] overflow-hidden bg-surface-container mb-6 border border-outline-variant/30">
-<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105" src="https://raw.githubusercontent.com/AndresPaginasweb/Casa-Barber-Studio/main/Images/profesional%202.png" alt="Estilista Principal — Director Creativo & Master Stylist">
-<div class="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent opacity-40 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none"></div>
-<div class="absolute top-4 right-4 bg-primary-container/85 backdrop-blur-md px-3.5 py-1.5 border border-brand-gold/50 shadow-md text-label-caps font-label-caps text-[10px] uppercase tracking-widest text-secondary-fixed font-semibold">12+ Años de Experiencia</div>
-</div>
-<div class="px-4 pb-3 text-center">
-<h3 class="text-headline-sm font-headline-sm text-primary mb-1.5 tracking-tight group-hover:text-secondary transition-colors duration-300">Estilista Principal</h3>
-<p class="text-label-caps font-label-caps uppercase text-secondary tracking-widest text-xs font-semibold">Director Creativo &amp; Master Stylist</p>
-<div class="mt-3 mx-auto w-12 h-px bg-brand-gold/40 group-hover:w-20 transition-all duration-500"></div>
-</div>
-</div>
-</div>
-</div>
+<!-- ============ GALERÍA ============ -->
+<section class="sec" id="galeria">
+  <div class="wrap">
+    <span class="eyebrow">El estudio</span>
+    <h2>Así trabajamos</h2>
+    <div class="rail gal" id="galRail"></div>
+  </div>
 </section>
 
-<!-- =========================================================================
-       7. GALERÍA
-       ========================================================================= -->
-<section class="py-24 max-w-7xl mx-auto px-6 md:px-12" id="galeria" style="background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, transparent 80%), radial-gradient(circle at 85% 20%, rgba(197, 160, 89, 0.06) 0%, transparent 50%);">
-<div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
-<div>
-<span class="text-label-caps font-label-caps uppercase text-secondary tracking-widest text-xs font-semibold block mb-2">Lookbook &amp; Editorial</span>
-<h2 class="text-headline-lg font-headline-lg text-primary tracking-tight">Nuestros Trabajos</h2>
-</div>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-<div class="group relative overflow-hidden bg-surface-container border border-outline-variant/30 aspect-[4/5]">
-<img class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" alt="Balayage rubio miel con transición perfecta" src="https://raw.githubusercontent.com/AndresPaginasweb/Casa-Barber-Studio/main/Images/chica%201.jpg">
-<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-<span class="text-brand-gold text-label-caps uppercase tracking-widest text-[11px] font-semibold">Balayage Rubio Miel</span>
-<span class="text-surface font-body-sm text-xs mt-1">@casabarberstudio · Santiago</span>
-</div>
-</div>
-<div class="group relative overflow-hidden bg-surface-container border border-outline-variant/30 aspect-[4/5]">
-<img class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" alt="Corte masculino de precisión y barbería contemporánea" src="https://raw.githubusercontent.com/AndresPaginasweb/Casa-Barber-Studio/main/Images/chica%203.jpg">
-<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-<span class="text-brand-gold text-label-caps uppercase tracking-widest text-[11px] font-semibold">Barbería de Autor &amp; Fade</span>
-<span class="text-surface font-body-sm text-xs mt-1">@casabarberstudio · Barrio Bellavista</span>
-</div>
-</div>
-<div class="group relative overflow-hidden bg-surface-container border border-outline-variant/30 aspect-[4/5]">
-<img class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" alt="Peinado nupcial de autor con accesorios de perla" src="https://raw.githubusercontent.com/AndresPaginasweb/Casa-Barber-Studio/main/Images/chica%204.jpg">
-<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-<span class="text-brand-gold text-label-caps uppercase tracking-widest text-[11px] font-semibold">Peinado Nupcial de Autor</span>
-<span class="text-surface font-body-sm text-xs mt-1">@casabarberstudio · Santiago</span>
-</div>
-</div>
-<div class="group relative overflow-hidden bg-surface-container border border-outline-variant/30 aspect-[4/5]">
-<img class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" alt="Manicura rusa spa con acabado impecable" src="https://raw.githubusercontent.com/AndresPaginasweb/Casa-Barber-Studio/main/Images/chica%205.jpg">
-<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-<span class="text-brand-gold text-label-caps uppercase tracking-widest text-[11px] font-semibold">Manicura Rusa Spa</span>
-<span class="text-surface font-body-sm text-xs mt-1">@casabarberstudio · Santiago</span>
-</div>
-</div>
-<div class="group relative overflow-hidden bg-surface-container border border-outline-variant/30 aspect-[4/5]">
-<img class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" alt="Coloración cobrizo luminoso con reflejos multidimensionales" src="https://raw.githubusercontent.com/AndresPaginasweb/Casa-Barber-Studio/main/Images/hombre%202.jpg">
-<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-<span class="text-brand-gold text-label-caps uppercase tracking-widest text-[11px] font-semibold">Coloración Cobrizo Luminoso</span>
-<span class="text-surface font-body-sm text-xs mt-1">@casabarberstudio · Barrio Bellavista</span>
-</div>
-</div>
-<div class="group relative overflow-hidden bg-surface-container border border-outline-variant/30 aspect-[4/5]">
-<img class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" alt="Estilismo y perfilado de barba masculino" src="https://raw.githubusercontent.com/AndresPaginasweb/Casa-Barber-Studio/main/Images/hombre%206.jpg">
-<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-<span class="text-brand-gold text-label-caps uppercase tracking-widest text-[11px] font-semibold">Estilismo &amp; Perfilado Masculino</span>
-<span class="text-surface font-body-sm text-xs mt-1">@casabarberstudio · Santiago</span>
-</div>
-</div>
-</div>
-<div class="mt-12 text-center">
-<a class="inline-flex items-center space-x-2 text-label-caps font-label-caps uppercase tracking-widest text-on-surface hover:text-secondary transition-colors border-b border-secondary pb-1" href="https://instagram.com" rel="noopener noreferrer" target="_blank">
-<span class="material-symbols-outlined text-sm">photo_camera</span>
-<span>Seguir galería en @casabarberstudio</span>
-</a>
-</div>
+<!-- ============ RESEÑAS ============ -->
+<section class="sec" id="resenas" hidden>
+  <div class="wrap">
+    <span class="eyebrow">Reseñas</span>
+    <h2>Lo que dicen los clientes</h2>
+    <div id="gRating"></div>
+    <div class="rail" id="rvRail"></div>
+  </div>
 </section>
 
-<!-- =========================================================================
-       8. TESTIMONIOS
-       ========================================================================= -->
-<section class="py-24 bg-surface-container-low border-t border-outline-variant/30" id="testimonios" style="background: radial-gradient(circle at 50% 15%, rgba(197, 160, 89, 0.07) 0%, transparent 55%), linear-gradient(rgb(244, 238, 226) 0%, rgb(236, 228, 210) 50%, rgb(244, 239, 228) 100%);">
-<div class="max-w-7xl mx-auto px-6 md:px-12">
-<div class="text-center max-w-2xl mx-auto mb-16">
-<span class="text-label-caps font-label-caps uppercase text-secondary tracking-widest text-xs font-semibold block mb-2">Opiniones Reales</span>
-<h2 class="text-headline-lg font-headline-lg text-primary tracking-tight">La Experiencia Contada por Clientes</h2>
-<div class="flex items-center justify-center space-x-2 mt-4">
-<span class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">Ejemplo de cómo se ven tus reseñas reales de Google</span>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<div class="bg-surface border border-outline-variant/40 p-8 flex flex-col justify-between shadow-xs">
-<div>
-<div class="flex items-center space-x-1 text-amber-500 mb-4">
-<span class="material-symbols-outlined text-sm material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill">star</span>
-</div>
-<p class="font-body-md text-body-md text-on-surface italic leading-relaxed mb-6">"El mejor corte y color que me han hecho en la ciudad. Tienen una precisión increíble y respetan la salud del cabello por sobre todo. El estudio es un agrado absoluto, silencioso y súper acogedor."</p>
-</div>
-<div class="pt-4 border-t border-outline-variant/20 flex items-center justify-between">
-<div>
-<p class="font-semibold text-on-surface text-sm">Reseña de ejemplo</p>
-<span class="text-[11px] text-on-surface-variant">Así se verá una reseña real</span>
-</div>
-<span class="text-[11px] text-outline">Hace 2 semanas</span>
-</div>
-</div>
-<div class="bg-surface border border-outline-variant/40 p-8 flex flex-col justify-between shadow-xs">
-<div>
-<div class="flex items-center space-x-1 text-amber-500 mb-4">
-<span class="material-symbols-outlined text-sm material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill">star</span>
-</div>
-<p class="font-body-md text-body-md text-on-surface italic leading-relaxed mb-6">"La barbería tiene un estándar de primer nivel. El servicio de toalla caliente y el perfilado de barba es impecable. Se nota la dedicación y la técnica en cada minuto. Muy recomendado para quienes buscan algo exclusivo."</p>
-</div>
-<div class="pt-4 border-t border-outline-variant/20 flex items-center justify-between">
-<div>
-<p class="font-semibold text-on-surface text-sm">Reseña de ejemplo</p>
-<span class="text-[11px] text-on-surface-variant">Así se verá una reseña real</span>
-</div>
-<span class="text-[11px] text-outline">Hace 1 mes</span>
-</div>
-</div>
-<div class="bg-surface border border-outline-variant/40 p-8 flex flex-col justify-between shadow-xs">
-<div>
-<div class="flex items-center space-x-1 text-amber-500 mb-4">
-<span class="material-symbols-outlined text-sm material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill">star</span>
-<span class="material-symbols-outlined text-sm material-symbols-fill">star</span>
-</div>
-<p class="font-body-md text-body-md text-on-surface italic leading-relaxed mb-6">"Me atendieron para mi matrimonio tanto en peinado como maquillaje. Lograron exactamente lo que soñaba: natural, luminoso y duró impecable toda la fiesta. Gracias a todo el equipo por hacerme sentir tan en paz."</p>
-</div>
-<div class="pt-4 border-t border-outline-variant/20 flex items-center justify-between">
-<div>
-<p class="font-semibold text-on-surface text-sm">Reseña de ejemplo</p>
-<span class="text-[11px] text-on-surface-variant">Así se verá una reseña real</span>
-</div>
-<span class="text-[11px] text-outline">Hace 2 meses</span>
-</div>
-</div>
-</div>
-</div>
-</section>
-
-<!-- =========================================================================
-       9. HORARIO DE ATENCIÓN
-       ========================================================================= -->
-<section class="py-24 max-w-7xl mx-auto px-6 md:px-12" id="horarios" style="background: radial-gradient(circle at 70% 50%, rgba(197, 160, 89, 0.06) 0%, transparent 65%), radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.8) 0%, transparent 60%);">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-<div class="lg:col-span-5 space-y-4">
-<span class="text-label-caps font-label-caps uppercase text-secondary tracking-widest text-xs font-semibold block">Planifica tu Visita</span>
-<h2 class="text-headline-lg font-headline-lg text-primary tracking-tight">Horario de Atención</h2>
-<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">Para garantizar una atención personalizada sin tiempos de espera ni aglomeraciones, operamos preferentemente mediante reserva previa confirmada.</p>
-<div class="pt-4">
-<div class="inline-flex items-center space-x-2 border border-brand-gold/50 bg-secondary-fixed/20 px-4 py-2">
-<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
-<span class="text-xs font-label-caps uppercase tracking-wider text-on-surface font-medium">Atención bajo reserva previa recomendada</span>
-</div>
-</div>
-</div>
-<div class="lg:col-span-7 bg-surface-container-low border border-outline-variant/40 p-8">
-<div class="divide-y divide-outline-variant/30">
-<div class="py-3.5 flex justify-between items-center">
-<span class="font-medium text-on-surface text-sm">Lunes</span>
-<span class="text-xs uppercase tracking-wider font-semibold text-outline">Cerrado</span>
-</div>
-<div class="py-3.5 flex justify-between items-center">
-<span class="font-medium text-on-surface text-sm">Martes</span>
-<span class="text-sm font-semibold text-primary">10:00 – 20:00</span>
-</div>
-<div class="py-3.5 flex justify-between items-center">
-<span class="font-medium text-on-surface text-sm">Miércoles</span>
-<span class="text-sm font-semibold text-primary">10:00 – 20:00</span>
-</div>
-<div class="py-3.5 flex justify-between items-center">
-<span class="font-medium text-on-surface text-sm">Jueves</span>
-<span class="text-sm font-semibold text-primary">10:00 – 20:00</span>
-</div>
-<div class="py-3.5 flex justify-between items-center">
-<span class="font-medium text-on-surface text-sm">Viernes</span>
-<span class="text-sm font-semibold text-primary">10:00 – 20:00</span>
-</div>
-<div class="py-3.5 flex justify-between items-center">
-<span class="font-medium text-on-surface text-sm">Sábado</span>
-<span class="text-sm font-semibold text-primary">10:00 – 20:00</span>
-</div>
-<div class="py-3.5 flex justify-between items-center">
-<span class="font-medium text-on-surface text-sm">Domingo</span>
-<span class="text-xs uppercase tracking-wider font-semibold text-outline">Cerrado</span>
-</div>
-</div>
-<div class="mt-6 pt-4 border-t border-outline-variant/30 flex items-center justify-between text-xs text-on-surface-variant">
-<span>* Horarios especiales para novias y producciones disponibles a solicitud.</span>
-</div>
-</div>
-</div>
-</section>
-
-<!-- =========================================================================
-       10. UBICACIÓN
-       ========================================================================= -->
-<section class="py-24 bg-surface-container-low border-t border-outline-variant/30" id="ubicacion" style="background: radial-gradient(circle at 30% 40%, rgba(197, 160, 89, 0.06) 0%, transparent 60%), linear-gradient(rgb(245, 239, 227) 0%, rgb(236, 229, 212) 100%);">
-<div class="max-w-7xl mx-auto px-6 md:px-12">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
-<div class="lg:col-span-6 space-y-4">
-<span class="text-label-caps font-label-caps uppercase text-secondary tracking-widest text-xs font-semibold block">¿Dónde nos ubicamos?</span>
-<h2 class="text-headline-lg font-headline-lg text-primary tracking-tight leading-snug">Av. Providencia 1234, Local 5, Providencia, Región Metropolitana</h2>
-<div class="space-y-3 pt-2">
-<div class="flex items-start space-x-3">
-<span class="material-symbols-outlined text-secondary text-xl">directions_car</span>
-<p class="text-body-sm font-body-sm text-on-surface-variant">Estacionamiento disponible en el edificio, con acceso directo desde la avenida principal.</p>
-</div>
-<div class="flex items-start space-x-3">
-<span class="material-symbols-outlined text-secondary text-xl">local_cafe</span>
-<p class="text-body-sm font-body-sm text-on-surface-variant">A pasos de cafeterías y restaurantes del barrio, ideal para hacer tiempo antes o después de tu cita.</p>
-</div>
-</div>
-<div class="pt-4">
-<a class="inline-flex items-center space-x-2 text-label-caps font-label-caps uppercase tracking-wider text-secondary hover:text-brand-gold font-semibold border-b border-secondary pb-1" href="https://maps.google.com" rel="noopener noreferrer" target="_blank">
-<span class="material-symbols-outlined text-base">map</span>
-<span>Cómo llegar en Google Maps →</span>
-</a>
-</div>
-</div>
-<div class="lg:col-span-6">
-<div class="border border-outline-variant/50 bg-surface p-4 shadow-sm">
-<div class="relative aspect-[16/10] overflow-hidden bg-surface-container">
-<img class="w-full h-full object-cover" alt="Mapa estilizado del barrio, marcando la ubicación del local" src="https://raw.githubusercontent.com/AndresPaginasweb/Casa-Barber-Studio/main/Images/ubicaci%C3%B3n%20lugar.jpg">
-<div class="absolute bottom-4 left-4 right-4 bg-surface/95 backdrop-blur-md p-4 border border-outline-variant/30 flex items-center justify-between">
-<div>
-<p class="font-semibold text-on-surface text-xs">Edificio Plaza · Local 5</p>
-<p class="text-[11px] text-on-surface-variant">Av. Providencia 1234, Providencia</p>
-</div>
-<span class="material-symbols-outlined text-brand-gold">navigation</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-
-<!-- =========================================================================
-       11. CTA FINAL / RESERVA
-       ========================================================================= -->
-<div class="w-full h-24 md:h-32 bg-gradient-to-b from-surface-container-low via-[#6b6255]/30 to-primary pointer-events-none -mb-px" style="background: linear-gradient(rgb(236, 229, 212) 0%, rgb(154, 138, 114) 45%, rgb(28, 27, 26) 100%);"></div>
-<section class="relative py-24 bg-primary-container text-surface-container-lowest overflow-hidden" id="reserva">
-<div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary to-primary opacity-95 pointer-events-none"></div>
-<div class="relative z-10 max-w-5xl mx-auto px-6 md:px-12 text-center flex flex-col items-center">
-<span class="text-label-caps font-label-caps uppercase text-brand-gold tracking-[0.25em] text-xs font-semibold mb-4">Reserva Exclusiva</span>
-<h2 class="text-headline-lg md:text-display-hero font-headline-lg md:font-display-hero text-surface-container-lowest tracking-tight max-w-3xl mb-6">Tu momento de bienestar y estilo comienza aquí</h2>
-<p class="font-body-lg text-body-lg text-inverse-primary max-w-xl font-light mb-10">Asegura tu cita con nuestros especialistas en corte, barbería y estética. Te esperamos en un espacio diseñado para renovarte.</p>
-<a class="inline-flex items-center justify-center space-x-3 bg-brand-gold hover:bg-brand-gold-hover text-surface-container-lowest px-10 py-5 uppercase text-label-caps font-label-caps tracking-widest font-semibold transition-all duration-300 shadow-lg text-sm" href="https://wa.me/56900000000" rel="noopener noreferrer" target="_blank">
-<span class="material-symbols-outlined text-xl">calendar_month</span>
-<span>Reservar hora ahora</span>
-</a>
-<p class="mt-6 text-xs text-on-primary-container tracking-wider uppercase font-label-caps">Confirmación inmediata vía WhatsApp y correo electrónico</p>
-</div>
+<!-- ============ UBICACIÓN Y HORARIOS ============ -->
+<section class="sec" id="ubicacion">
+  <div class="wrap">
+    <span class="eyebrow">Ubicación y horarios</span>
+    <h2>Visítanos</h2>
+    <div class="loc">
+      <div>
+        <p class="addr"><span data-t="address"></span><small data-t="city"></small></p>
+        <div class="btns">
+          <a class="btn btn-primary" data-link="maps" target="_blank" rel="noopener"><svg class="ic"><use href="#i-pin"/></svg>Cómo llegar</a>
+          <a class="btn btn-ghost" data-link="waze" target="_blank" rel="noopener">Abrir en Waze</a>
+        </div>
+        <div class="mapbox" id="mapbox">
+          <div class="mapph"><svg class="ic"><use href="#i-pin"/></svg><span data-t="address"></span><button class="btn btn-ghost" id="mapBtn" type="button" style="min-height:44px">Ver mapa aquí</button></div>
+        </div>
+      </div>
+      <div class="hours" id="hours"></div>
+    </div>
+  </div>
 </section>
 </main>
 
-<!-- =========================================================================
-     12. FOOTER
-     ========================================================================= -->
-<footer class="w-full bg-primary border-outline-variant/20" id="contacto">
-<div class="max-w-7xl mx-auto px-6 md:px-12 py-16 flex flex-col justify-between">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-outline/20">
-<div class="lg:col-span-5 space-y-4">
-<a class="text-headline-md font-headline-md text-on-primary tracking-wider uppercase inline-block font-bold" href="#">Casa Barber Studio</a>
-<p class="text-body-sm font-body-sm text-on-primary-container max-w-sm leading-relaxed">Salón de alta peluquería, barbería y estética. Precisión técnica y hospitalidad personalizada en cada visita.</p>
-<div class="pt-2 text-body-sm font-body-sm text-on-primary-container space-y-1">
-<p>Av. Providencia 1234, Local 5</p>
-<p>Providencia, Santiago, Chile</p>
-<p class="text-secondary-fixed font-medium">contacto@casabarberstudio.cl</p>
-</div>
-</div>
-<div class="lg:col-span-3 space-y-3">
-<p class="text-label-caps font-label-caps text-on-primary uppercase tracking-widest font-semibold text-xs mb-4">Navegación</p>
-<ul class="space-y-2.5">
-<li><a class="text-secondary-fixed font-medium text-body-sm font-body-sm hover:underline transition-colors duration-200" href="#servicios">Servicios</a></li>
-<li><a class="text-on-primary-container hover:text-on-primary transition-colors duration-200 text-body-sm font-body-sm" href="#nosotros">Nosotros</a></li>
-<li><a class="text-on-primary-container hover:text-on-primary transition-colors duration-200 text-body-sm font-body-sm" href="#galeria">Galería</a></li>
-<li><a class="text-on-primary-container hover:text-on-primary transition-colors duration-200 text-body-sm font-body-sm" href="#ubicacion">Ubicación</a></li>
-<li><a class="text-on-primary-container hover:text-on-primary transition-colors duration-200 text-body-sm font-body-sm" href="#testimonios">Términos y Privacidad</a></li>
-<li><a class="text-on-primary-container hover:text-on-primary transition-colors duration-200 text-body-sm font-body-sm" href="#reserva">Protocolo Concierge</a></li>
-</ul>
-</div>
-<div class="lg:col-span-4 space-y-4">
-<p class="text-label-caps font-label-caps text-on-primary uppercase tracking-widest font-semibold text-xs mb-4">Horarios &amp; Redes</p>
-<div class="text-body-sm font-body-sm text-on-primary-container space-y-1">
-<p><strong class="text-on-primary">Martes a Sábado:</strong> 10:00 – 20:00 hrs.</p>
-<p><strong class="text-on-primary">Domingo y Lunes:</strong> Cerrado</p>
-</div>
-<div class="pt-4 flex items-center space-x-4">
-<a class="w-10 h-10 border border-outline/30 flex items-center justify-center text-on-primary hover:border-brand-gold hover:text-brand-gold transition-colors" href="https://instagram.com" rel="noopener noreferrer" target="_blank" title="Instagram">
-<span class="material-symbols-outlined text-lg">photo_camera</span>
-</a>
-<a class="w-10 h-10 border border-outline/30 flex items-center justify-center text-on-primary hover:border-brand-gold hover:text-brand-gold transition-colors" href="https://wa.me/56900000000" rel="noopener noreferrer" target="_blank" title="WhatsApp">
-<span class="material-symbols-outlined text-lg">chat</span>
-</a>
-<a class="w-10 h-10 border border-outline/30 flex items-center justify-center text-on-primary hover:border-brand-gold hover:text-brand-gold transition-colors" href="https://facebook.com" rel="noopener noreferrer" target="_blank" title="Facebook">
-<span class="material-symbols-outlined text-lg">public</span>
-</a>
-<a class="w-10 h-10 border border-outline/30 flex items-center justify-center text-on-primary hover:border-brand-gold hover:text-brand-gold transition-colors" href="https://maps.google.com" rel="noopener noreferrer" target="_blank" title="Google Maps">
-<span class="material-symbols-outlined text-lg">location_on</span>
-</a>
-</div>
-</div>
-</div>
-<div class="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-on-primary-container gap-4">
-<p class="text-body-sm font-body-sm">© 2026 Casa Barber Studio. Todos los derechos reservados.</p>
-<span class="text-label-caps font-label-caps uppercase tracking-wider text-[10px] text-outline">Diseño Editorial · Chile</span>
-</div>
-</div>
+<!-- ============ FOOTER ============ -->
+<footer class="foot">
+  <div class="wrap">
+    <div>
+      <b class="n" data-t="name"></b>
+      <span data-t="address"></span><br><span data-t="city"></span>
+    </div>
+    <div class="links">
+      <a data-link="tel" id="fPhone"></a>
+      <a data-link="waHello" target="_blank" rel="noopener">WhatsApp</a>
+      <a data-link="ig" target="_blank" rel="noopener" id="fIg"></a>
+    </div>
+    <div>
+      <span id="copy"></span>
+      <div id="demoTag" style="margin-top:10px"></div>
+    </div>
+  </div>
 </footer>
 
-<!-- Floating WhatsApp/Booking Trigger -->
-<aside aria-label="Contacto directo" class="fixed bottom-6 right-6 z-40">
-<a class="group flex items-center space-x-3 bg-brand-noir border border-brand-gold text-surface-container-lowest px-4 py-3 rounded-full shadow-2xl hover:bg-brand-gold transition-all duration-300" href="https://wa.me/56900000000" rel="noopener noreferrer" target="_blank">
-<span class="material-symbols-outlined text-brand-gold group-hover:text-surface-container-lowest text-2xl transition-colors">chat</span>
-<span class="hidden sm:inline-block uppercase font-label-caps text-label-caps tracking-widest text-[11px] font-semibold pr-1">Concierge WhatsApp</span>
-</a>
-</aside>
+<!-- ============ BARRA INFERIOR (solo celular) ============ -->
+<div class="bar">
+  <a class="btn btn-primary" href="#reservar"><svg class="ic"><use href="#i-cal"/></svg>Reservar hora</a>
+  <a class="btn btn-wa sq" data-link="waHello" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="ic"><use href="#i-wa"/></svg></a>
+  <a class="btn btn-ghost sq" data-link="tel" aria-label="Llamar"><svg class="ic"><use href="#i-phone"/></svg></a>
+</div>
 
-</body></html>
+<noscript>
+  <div style="padding:20px;text-align:center">Activa JavaScript para ver los servicios y reservar tu hora, o escríbenos por WhatsApp.</div>
+</noscript>
+
+<script>
+(function () {
+  "use strict";
+  var C = window.CONFIG, B = C.business, BK = C.booking;
+  var DAYK = ["dom","lun","mar","mie","jue","vie","sab"];
+  var DAYN = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+  var DAYS = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+  var MON  = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+  var MONL = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]; }); }
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function money(n) { return "$" + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+  function toMin(t) { var p = t.split(":"); return +p[0] * 60 + +p[1]; }
+  function fromMin(m) { return pad(Math.floor(m / 60)) + ":" + pad(m % 60); }
+
+  /* ---------- Fecha y hora en la zona del local ---------- */
+  function nowShop() {
+    try {
+      var f = new Intl.DateTimeFormat("en-CA", { timeZone: B.tz, hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
+      var o = {};
+      f.formatToParts(new Date()).forEach(function (p) { o[p.type] = p.value; });
+      return { y: +o.year, m: +o.month, d: +o.day, min: (+o.hour % 24) * 60 + +o.minute };
+    } catch (e) {
+      var n = new Date();
+      return { y: n.getFullYear(), m: n.getMonth() + 1, d: n.getDate(), min: n.getHours() * 60 + n.getMinutes() };
+    }
+  }
+  function addDays(o, i) {
+    var d = new Date(Date.UTC(o.y, o.m - 1, o.d + i));
+    return { y: d.getUTCFullYear(), m: d.getUTCMonth() + 1, d: d.getUTCDate(), dow: d.getUTCDay() };
+  }
+  function keyOf(o) { return o.y + "-" + pad(o.m) + "-" + pad(o.d); }
+  function parseKey(k) { var p = k.split("-"); return addDays({ y: +p[0], m: +p[1], d: +p[2] }, 0); }
+  function isClosedDate(d) { return (BK.closedDates || []).indexOf(keyOf(d)) !== -1; }
+
+  /* ---------- Links ---------- */
+  var addrFull = B.address + ", " + B.city;
+  var LINKS = {
+    waHello: "https://wa.me/" + B.whatsapp + "?text=" + encodeURIComponent("Hola, quisiera consultar por una hora en " + B.name + "."),
+    tel: "tel:" + B.phone,
+    maps: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(addrFull),
+    waze: "https://waze.com/ul?q=" + encodeURIComponent(addrFull) + "&navigate=yes",
+    ig: "https://instagram.com/" + B.instagram
+  };
+  if (B.whatsapp === "56900000000") { console.warn("[Plantilla] WhatsApp de ejemplo: cámbialo en CONFIG.business.whatsapp"); }
+
+  $$("[data-t]").forEach(function (e) { e.textContent = B[e.getAttribute("data-t")]; });
+  $$("[data-link]").forEach(function (e) { e.href = LINKS[e.getAttribute("data-link")]; });
+  $("#eyebrow").textContent = "Barbería · " + B.area;
+  $("#fPhone").textContent = B.phoneLabel;
+  $("#fIg").textContent = "@" + B.instagram;
+  $("#copy").textContent = "© " + nowShop().y + " " + B.name;
+  if (C.demo) {
+    var a = C.agency, tag = "Demo creado por " + esc(a.name);
+    $("#demoTag").innerHTML = '<span class="demo">' + (a.whatsapp ? '<a href="https://wa.me/' + esc(a.whatsapp) + '" target="_blank" rel="noopener">' + tag + "</a>" : tag) + "</span>";
+  }
+
+  /* ---------- Imágenes ---------- */
+  function img(src, alt, pos, eager) {
+    return '<img src="' + C.imgBase + encodeURIComponent(src) + '" data-f="' + esc(src) + '" alt="' + esc(alt) + '"' +
+      (pos ? ' style="object-position:' + esc(pos) + '"' : "") +
+      (eager ? "" : ' loading="lazy"') + ' decoding="async" onerror="imgErr(this)">';
+  }
+
+  /* ---------- Estado abierto / cerrado ---------- */
+  function statusInfo() {
+    var n = nowShop(), t = addDays(n, 0), h = B.hours[DAYK[t.dow]];
+    if (h && !isClosedDate(t)) {
+      var o = toMin(h[0]), c = toMin(h[1]);
+      if (n.min >= o && n.min < c) {
+        return c - n.min <= 60 ? { open: true, text: "Cierra pronto · " + h[1] } : { open: true, text: "Abierto ahora · cierra a las " + h[1] };
+      }
+      if (n.min < o) return { open: false, text: "Cerrado · abre hoy a las " + h[0] };
+    }
+    for (var i = 1; i <= 8; i++) {
+      var d = addDays(n, i), hh = B.hours[DAYK[d.dow]];
+      if (hh && !isClosedDate(d)) return { open: false, text: "Cerrado · abre " + (i === 1 ? "mañana" : "el " + DAYN[d.dow].toLowerCase()) + " a las " + hh[0] };
+    }
+    return { open: false, text: "Cerrado por ahora" };
+  }
+  function updateStatus() {
+    var s = statusInfo(), el = $("#status");
+    el.innerHTML = '<i class="dot ' + (s.open ? "on" : "off") + '"></i><span>' + esc(s.text) + "</span>";
+  }
+
+  /* ---------- Servicios ---------- */
+  $("#svcList").innerHTML = C.services.map(function (s) {
+    return '<li><button type="button" class="svcb" data-act="pick" data-id="' + esc(s.id) + '">' +
+      '<span class="n">' + esc(s.name) + (s.popular ? '<em class="tag-p">Más pedido</em>' : "") + "</span>" +
+      '<span class="p">' + (s.from ? "Desde " : "") + money(s.price) + "</span>" +
+      '<span class="m">' + s.duration + " min" + (s.note ? " · " + esc(s.note) : "") + "</span>" +
+      '<span class="go">Reservar <svg class="ic"><use href="#i-arrow"/></svg></span></button></li>';
+  }).join("");
+
+  /* ---------- Equipo ---------- */
+  $("#teamRail").innerHTML = C.barbers.map(function (b) {
+    var first = b.name.split(" ")[0];
+    return '<article class="bc"><div class="ph"><span class="ini">' + esc(b.name.charAt(0)) + "</span>" +
+      (b.photo ? img(b.photo, b.name + ", " + b.role, b.pos) : "") + "</div>" +
+      '<div class="bi"><h3>' + esc(b.name) + "</h3><p>" + esc(b.role) + "</p>" +
+      '<button type="button" class="btn btn-ghost btn-block" data-act="withb" data-id="' + esc(b.id) + '">Reservar con ' + esc(first) + "</button></div></article>";
+  }).join("");
+
+  /* ---------- Galería ---------- */
+  if (C.gallery && C.gallery.length) {
+    $("#galRail").innerHTML = C.gallery.map(function (g) { return '<div class="gi">' + img(g.src, g.alt, g.pos) + "</div>"; }).join("");
+  } else { $("#galeria").hidden = true; $$('a[href="#galeria"]').forEach(function (a) { a.hidden = true; }); }
+
+  /* ---------- Reseñas ---------- */
+  var reviews = (C.reviews || []).filter(function (r) { return C.demo || !r.demo; });
+  if (reviews.length) {
+    $("#resenas").hidden = false;
+    var star5 = '<div class="stars" aria-label="5 estrellas">' + new Array(6).join('<svg class="ic"><use href="#i-star"/></svg>') + "</div>";
+    $("#rvRail").innerHTML = reviews.map(function (r) {
+      return '<article class="rv">' + star5 + "<p>" + esc(r.text) + "</p><footer><span>" + esc(r.author) + (r.when ? " · " + esc(r.when) : "") + "</span>" + (r.demo ? '<span class="ex">Ejemplo</span>' : "") + "</footer></article>";
+    }).join("");
+  } else { $$('[data-needs="reviews"]').forEach(function (a) { a.hidden = true; }); }
+  var G = C.google || {};
+  if (G.rating) {
+    $("#resenas").hidden = false;
+    var gr = '<span class="grat"><span class="stars"><svg class="ic"><use href="#i-star"/></svg></span>' + String(G.rating).replace(".", ",") + (G.count ? " · " + G.count + " reseñas en Google" : " en Google") + "</span>";
+    $("#gRating").innerHTML = G.url ? '<a href="' + esc(G.url) + '" target="_blank" rel="noopener">' + gr + "</a>" : gr;
+    $$('[data-needs="reviews"]').forEach(function (a) { a.hidden = false; });
+  }
+
+  /* ---------- Horarios ---------- */
+  function renderHours() {
+    var today = addDays(nowShop(), 0).dow;
+    $("#hours").innerHTML = "<h3>Horario de atención</h3><ul>" + [1,2,3,4,5,6,0].map(function (d) {
+      var h = B.hours[DAYK[d]];
+      return '<li class="' + (d === today ? "today" : "") + '"><span>' + DAYN[d] + (d === today ? " · hoy" : "") + "</span>" +
+        (h ? "<span>" + h[0] + " – " + h[1] + "</span>" : '<span class="c">Cerrado</span>') + "</li>";
+    }).join("") + "</ul>";
+  }
+
+  /* ---------- Mapa (se carga al tocar, para no gastar datos) ---------- */
+  $("#mapBtn").addEventListener("click", function () {
+    $("#mapbox").innerHTML = '<iframe title="Mapa de ' + esc(B.name) + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=' + encodeURIComponent(addrFull) + '&hl=es&z=16&output=embed"></iframe>';
+  });
+
+  /* ---------- Menú móvil ---------- */
+  var mbtn = $("#mbtn"), menu = $("#menu");
+  function setMenu(open) {
+    menu.classList.toggle("open", open);
+    mbtn.setAttribute("aria-expanded", open ? "true" : "false");
+    mbtn.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    mbtn.innerHTML = '<svg class="ic"><use href="#' + (open ? "i-x" : "i-menu") + '"/></svg>';
+  }
+  mbtn.addEventListener("click", function () { setMenu(!menu.classList.contains("open")); });
+  menu.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
+
+  /* El teclado en pantalla no debe taparse con la barra inferior */
+  var kbTimer;
+  document.addEventListener("focusin", function (e) {
+    if (e.target.matches("input,textarea")) { clearTimeout(kbTimer); document.body.classList.add("kb"); }
+  });
+  document.addEventListener("focusout", function () {
+    /* pequeño retraso: así la barra no reaparece justo debajo del dedo al tocar "Enviar" */
+    clearTimeout(kbTimer);
+    kbTimer = setTimeout(function () {
+      if (!document.activeElement || !document.activeElement.matches("input,textarea")) document.body.classList.remove("kb");
+    }, 500);
+  });
+
+  /* =========================================================================
+     SISTEMA DE RESERVAS (flujo guiado → WhatsApp)
+     ========================================================================= */
+  var STEPS = ["service", "barber", "date", "time", "confirm"];
+  var TITLES = ["¿Qué te vas a hacer?", "¿Con quién?", "¿Qué día?", "¿A qué hora?", "Confirma tu solicitud"];
+  var bookEl = $("#book");
+  var S = fresh();
+  function fresh() { return { step: 0, service: null, barber: null, date: null, time: null, assigned: null, name: store("get") || "", note: "", sent: false, url: "" }; }
+  function store(op, v) { try { if (op === "get") return localStorage.getItem("cbs_name"); localStorage.setItem("cbs_name", v); } catch (e) {} return ""; }
+
+  function svc() { return C.services.filter(function (s) { return s.id === S.service; })[0]; }
+  function barberById(id) { return C.barbers.filter(function (b) { return b.id === id; })[0]; }
+  function listFor(barber) { return barber === "any" ? C.barbers : [barberById(barber)]; }
+
+  function blockedList(b, date) {
+    var k = keyOf(date), out = [];
+    (b.blocked || []).forEach(function (s) {
+      var m = String(s).match(/^(\d{4}-\d{2}-\d{2})(?:\s+(\d{2}:\d{2})-(\d{2}:\d{2}))?$/);
+      if (!m || m[1] !== k) return;
+      out.push(m[2] ? [toMin(m[2]), toMin(m[3])] : [0, 1440]);
+    });
+    return out;
+  }
+  function barberSlots(b, date, dur, nowMin) {
+    var h = b.schedule[DAYK[date.dow]];
+    if (!h || isClosedDate(date)) return [];
+    var h0 = B.hours[DAYK[date.dow]];
+    var o = toMin(h[0]), c = toMin(h[1]);
+    if (h0) { o = Math.max(o, toMin(h0[0])); c = Math.min(c, toMin(h0[1])); }
+    var today = nowMin !== null, out = [];
+    var spans = (b.breaks || []).map(function (x) { return [toMin(x[0]), toMin(x[1])]; }).concat(blockedList(b, date));
+    for (var t = o; t + dur <= c; t += BK.step) {
+      if (today && t < nowMin + BK.leadMinutes) continue;
+      var bad = spans.some(function (s) { return t < s[1] && t + dur > s[0]; });
+      if (!bad) out.push(t);
+    }
+    return out;
+  }
+  function slotsFor(date) {
+    var s = svc(); if (!s || !S.barber) return [];
+    var n = nowShop(), nowMin = keyOf(date) === keyOf(n) ? n.min : null, map = {};
+    listFor(S.barber).forEach(function (b) {
+      barberSlots(b, date, s.duration, nowMin).forEach(function (t) { if (!(t in map)) map[t] = b; });
+    });
+    return Object.keys(map).map(Number).sort(function (a, b) { return a - b; }).map(function (t) { return { t: t, b: map[t] }; });
+  }
+  function worksThatDay(date) {
+    return listFor(S.barber).some(function (b) { return b.schedule[DAYK[date.dow]] && !isClosedDate(date); });
+  }
+
+  function dateLabel(date, long) {
+    var n = nowShop(), k = keyOf(date);
+    if (k === keyOf(n)) return long ? "hoy, " + DAYN[date.dow].toLowerCase() + " " + date.d + " de " + MONL[date.m - 1] : "Hoy";
+    if (k === keyOf(addDays(n, 1))) return long ? "mañana, " + DAYN[date.dow].toLowerCase() + " " + date.d + " de " + MONL[date.m - 1] : "Mañana";
+    return long ? DAYN[date.dow].toLowerCase() + " " + date.d + " de " + MONL[date.m - 1] : DAYS[date.dow] + " " + date.d;
+  }
+
+  function firstIncomplete() {
+    if (!S.service) return 0;
+    if (!S.barber) return 1;
+    if (!S.date) return 2;
+    if (S.time === null) return 3;
+    return 4;
+  }
+
+  function summaryChips() {
+    var chips = [];
+    if (S.service && S.step !== 0) chips.push([0, svc().name]);
+    if (S.barber && S.step !== 1) chips.push([1, S.barber === "any" ? "Cualquier barbero" : barberById(S.barber).name.split(" ")[0]]);
+    if (S.date && S.step !== 2) chips.push([2, dateLabel(parseKey(S.date))]);
+    if (S.time !== null && S.step !== 3) chips.push([3, fromMin(S.time)]);
+    if (!chips.length || S.step === 4) return "";
+    return '<div class="sum">' + chips.map(function (c) { return '<button type="button" data-act="goto" data-step="' + c[0] + '">' + esc(c[1]) + "</button>"; }).join("") + "</div>";
+  }
+
+  function stepBody() {
+    var i = S.step, h = "";
+    if (i === 0) {
+      h = '<div class="opts">' + C.services.map(function (s) {
+        return '<button type="button" class="opt" data-act="svc" data-id="' + esc(s.id) + '" aria-pressed="' + (S.service === s.id) + '"><span class="t"><b>' + esc(s.name) + "</b><span>" + s.duration + " min" + (s.note ? " · " + esc(s.note) : "") + '</span></span><span class="r">' + (s.from ? "Desde " : "") + money(s.price) + "</span></button>";
+      }).join("") + "</div>";
+    } else if (i === 1) {
+      h = '<div class="opts"><button type="button" class="opt" data-act="barber" data-id="any" aria-pressed="' + (S.barber === "any") + '"><span class="ava">★</span><span class="t"><b>Cualquiera disponible</b><span>Te damos la primera hora libre</span></span></button>' +
+        C.barbers.map(function (b) {
+          return '<button type="button" class="opt" data-act="barber" data-id="' + esc(b.id) + '" aria-pressed="' + (S.barber === b.id) + '"><span class="ava">' + esc(b.name.charAt(0)) + (b.photo ? img(b.photo, "", "50% 15%") : "") + '</span><span class="t"><b>' + esc(b.name) + "</b><span>" + esc(b.role) + "</span></span></button>";
+        }).join("") + "</div>";
+    } else if (i === 2) {
+      var n = nowShop();
+      h = '<div class="dgrid">';
+      for (var k = 0; k < BK.daysAhead; k++) {
+        var d = addDays(n, k), key = keyOf(d), has = slotsFor(d).length > 0;
+        var why = has ? "" : (worksThatDay(d) ? "Sin horas" : (S.barber === "any" ? "Cerrado" : "No atiende"));
+        h += '<button type="button" class="dchip" data-act="date" data-k="' + key + '" aria-pressed="' + (S.date === key) + '"' + (has ? "" : " disabled") + ">" +
+          "<small>" + (k === 0 ? "Hoy" : k === 1 ? "Mañana" : DAYS[d.dow]) + "</small><b>" + d.d + "</b><small>" + (has ? MON[d.m - 1] : why) + "</small></button>";
+      }
+      h += "</div>";
+    } else if (i === 3) {
+      var slots = slotsFor(parseKey(S.date));
+      if (!slots.length) {
+        h = '<div class="empty">Ya no quedan horas para este día. Prueba con otro.</div><div class="stack"><button type="button" class="btn btn-primary" data-act="goto" data-step="2">Elegir otro día</button></div>';
+      } else {
+        var groups = [["Mañana", 0, 720], ["Tarde", 720, 1080], ["Noche", 1080, 1440]];
+        groups.forEach(function (g) {
+          var part = slots.filter(function (s) { return s.t >= g[1] && s.t < g[2]; });
+          if (!part.length) return;
+          h += '<p class="grp">' + g[0] + '</p><div class="tgrid">' + part.map(function (s) {
+            return '<button type="button" class="tbtn" data-act="time" data-t="' + s.t + '" data-b="' + esc(s.b.id) + '" aria-pressed="' + (S.time === s.t) + '">' + fromMin(s.t) + "</button>";
+          }).join("") + "</div>";
+        });
+      }
+    } else {
+      var sv = svc(), bb = barberById(S.assigned), dt = parseKey(S.date);
+      h = '<dl class="recap">' +
+        "<div><dt>Servicio</dt><dd>" + esc(sv.name) + "</dd></div>" +
+        "<div><dt>Barbero</dt><dd>" + esc(bb.name) + "</dd></div>" +
+        "<div><dt>Día</dt><dd>" + esc(dateLabel(dt, true)) + "</dd></div>" +
+        "<div><dt>Hora</dt><dd>" + fromMin(S.time) + " hrs</dd></div>" +
+        "<div><dt>Valor</dt><dd>" + (sv.from ? "Desde " : "") + money(sv.price) + "</dd></div></dl>" +
+        '<label class="fld"><span>Tu nombre</span><input id="fName" type="text" autocomplete="name" maxlength="60" placeholder="Ej: Juan Pérez" value="' + esc(S.name) + '"></label>' +
+        '<label class="fld"><span>Comentario (opcional)</span><input id="fNote" type="text" maxlength="140" placeholder="Ej: quiero fade bajo" value="' + esc(S.note) + '"></label>' +
+        '<p class="err" id="fErr" hidden>Escribe tu nombre para continuar.</p>' +
+        '<a id="send" class="btn btn-wa btn-block" href="#" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg>Enviar solicitud por WhatsApp</a>' +
+        '<p class="fine">Se abre WhatsApp con tu solicitud lista. Tu hora queda confirmada cuando te respondamos.</p>';
+    }
+    return h;
+  }
+
+  function sentBody() {
+    return '<div class="ok-ico"><svg class="ic"><use href="#i-check"/></svg></div>' +
+      '<div class="shead"><h3 tabindex="-1" id="stepH">Solicitud lista</h3></div>' +
+      '<p class="lead" style="margin-bottom:6px">Se abrió WhatsApp con tu solicitud. Solo falta que presiones <b>enviar</b>.</p>' +
+      '<p class="fine" style="margin-top:0">Tu hora queda confirmada cuando ' + esc(B.name) + " te responda por el mismo chat.</p>" +
+      '<div class="stack"><a class="btn btn-wa" href="' + esc(S.url) + '" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg>Abrir WhatsApp de nuevo</a>' +
+      '<button type="button" class="btn btn-ghost" data-act="reset">Reservar otra hora</button></div>';
+  }
+
+  function render(user) {
+    var h;
+    if (S.sent) {
+      h = sentBody();
+    } else {
+      var prog = "";
+      for (var i = 0; i < STEPS.length; i++) prog += '<i class="' + (i <= S.step ? "on" : "") + '"></i>';
+      h = '<div class="prog" aria-hidden="true">' + prog + "</div>" +
+        '<div class="shead"><h3 tabindex="-1" id="stepH">' + TITLES[S.step] + "</h3><small>Paso " + (S.step + 1) + " de " + STEPS.length + "</small></div>" +
+        summaryChips() + stepBody() +
+        (S.step > 0 ? '<div class="nav2"><button type="button" class="btn btn-ghost" data-act="back">← Atrás</button></div>' : "");
+    }
+    bookEl.innerHTML = h;
+    if (S.step === 4 && !S.sent) wireConfirm();
+    if (user) {
+      var hd = $("#stepH"); if (hd) hd.focus({ preventScroll: true });
+      alignBook();
+    }
+  }
+  /* Deja la tarjeta de reserva justo bajo el header, para ver el paso completo */
+  function alignBook() {
+    var top = bookEl.getBoundingClientRect().top;
+    if (Math.abs(top - 76) > 24) window.scrollTo({ top: window.pageYOffset + top - 76, behavior: "smooth" });
+  }
+
+  function advance() { S.step = firstIncomplete(); render(true); }
+
+  /* ---------- Mensaje de WhatsApp ---------- */
+  function buildMsg() {
+    var sv = svc(), bb = barberById(S.assigned), dt = parseKey(S.date);
+    var lines = [
+      "Hola, quiero solicitar una hora en " + B.name + ":",
+      "",
+      "- Servicio: " + sv.name + " (" + (sv.from ? "desde " : "") + money(sv.price) + ")",
+      "- Barbero: " + bb.name + (S.barber === "any" ? " (primer disponible)" : ""),
+      "- Día: " + dateLabel(dt, true),
+      "- Hora: " + fromMin(S.time),
+      "- Nombre: " + S.name.trim()
+    ];
+    if (S.note.trim()) lines.push("- Comentario: " + S.note.trim());
+    lines.push("", "Quedo pendiente de tu confirmación. ¡Gracias!");
+    return "https://wa.me/" + B.whatsapp + "?text=" + encodeURIComponent(lines.join("\n"));
+  }
+  function wireConfirm() {
+    var nameEl = $("#fName"), noteEl = $("#fNote"), send = $("#send"), err = $("#fErr");
+    function sync() {
+      S.name = nameEl.value; S.note = noteEl.value;
+      var ok = S.name.trim().length >= 2;
+      send.setAttribute("aria-disabled", ok ? "false" : "true");
+      send.href = ok ? buildMsg() : "#";
+      if (ok) err.hidden = true;
+    }
+    nameEl.addEventListener("input", sync); noteEl.addEventListener("input", sync);
+    send.addEventListener("click", function (e) {
+      sync();
+      if (S.name.trim().length < 2) { e.preventDefault(); err.hidden = false; nameEl.focus(); return; }
+      store("set", S.name.trim());
+      var url = buildMsg();
+      setTimeout(function () { S.sent = true; S.url = url; render(true); }, 350);
+    });
+    sync();
+  }
+
+  /* ---------- Eventos del flujo ---------- */
+  function set(k, v) {
+    S[k] = v;
+    if (k === "service" || k === "barber") {
+      S.time = null; S.assigned = null;
+      if (S.date && !slotsFor(parseKey(S.date)).length) S.date = null;
+    }
+    if (k === "date") { S.time = null; S.assigned = null; }
+  }
+  bookEl.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-act]"); if (!t) return;
+    var act = t.getAttribute("data-act");
+    if (act === "svc") { set("service", t.getAttribute("data-id")); advance(); }
+    else if (act === "barber") { set("barber", t.getAttribute("data-id")); advance(); }
+    else if (act === "date") { set("date", t.getAttribute("data-k")); advance(); }
+    else if (act === "time") { S.time = +t.getAttribute("data-t"); S.assigned = t.getAttribute("data-b"); advance(); }
+    else if (act === "goto") { S.step = +t.getAttribute("data-step"); render(true); }
+    else if (act === "back") { S.step = Math.max(0, S.step - 1); render(true); }
+    else if (act === "reset") { S = fresh(); render(true); }
+  });
+
+  /* Desde fuera del flujo: tocar un servicio o "Reservar con ..." */
+  function scrollToBook() { alignBook(); }
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest('[data-act="pick"],[data-act="withb"]');
+    if (!t || bookEl.contains(t)) return;
+    if (S.sent) S = fresh();
+    if (t.getAttribute("data-act") === "pick") set("service", t.getAttribute("data-id"));
+    else set("barber", t.getAttribute("data-id"));
+    S.step = firstIncomplete(); render(false); scrollToBook();
+  });
+
+  /* ---------- Datos estructurados para Google ---------- */
+  (function () {
+    var map = { lun: "Monday", mar: "Tuesday", mie: "Wednesday", jue: "Thursday", vie: "Friday", sab: "Saturday", dom: "Sunday" };
+    var spec = [];
+    Object.keys(map).forEach(function (k) { var h = B.hours[k]; if (h) spec.push({ "@type": "OpeningHoursSpecification", dayOfWeek: map[k], opens: h[0], closes: h[1] }); });
+    var ld = {
+      "@context": "https://schema.org", "@type": "BarberShop", name: B.name,
+      description: B.tagline, telephone: B.phone, priceRange: "$$",
+      address: { "@type": "PostalAddress", streetAddress: B.address, addressLocality: B.locality, addressRegion: B.region, addressCountry: "CL" },
+      openingHoursSpecification: spec, sameAs: ["https://instagram.com/" + B.instagram]
+    };
+    if (G.rating && G.count) ld.aggregateRating = { "@type": "AggregateRating", ratingValue: G.rating, reviewCount: G.count };
+    var s = document.createElement("script"); s.type = "application/ld+json"; s.textContent = JSON.stringify(ld);
+    document.head.appendChild(s);
+  })();
+
+  /* ---------- Arranque ---------- */
+  updateStatus(); renderHours(); render(false);
+  setInterval(updateStatus, 60000);
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) return;
+    updateStatus(); renderHours();
+    if (!S.sent && (S.step === 2 || S.step === 3)) render(false);
+  });
+})();
+</script>
+</body>
+</html>
