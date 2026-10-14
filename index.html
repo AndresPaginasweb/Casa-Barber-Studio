@@ -137,7 +137,24 @@ window.CONFIG = {
   ],
 
   // Si el cliente tiene ficha de Google, completa esto y se mostrará la calificación real.
-  google: { rating: null, count: null, url: "" }   // ej: { rating: 4.9, count: 128, url: "https://g.page/..." }
+  google: { rating: null, count: null, url: "" },  // ej: { rating: 4.9, count: 128, url: "https://g.page/..." }
+
+  // Texto que se muestra bajo el título de servicios. Debe ser verdad para el cliente:
+  // si sus precios NO incluyen IVA, cámbialo. El precio publicado debe ser el precio final.
+  priceNote: "Valores en pesos chilenos, IVA incluido.",
+
+  // DATOS LEGALES (obligatorio completarlos con los datos REALES de cada cliente).
+  // Alimentan el pie de página, la Política de privacidad y los Términos de la reserva.
+  legal: {
+    razonSocial: "Razón social del negocio",     // ej: "Casa Barber Studio SpA"
+    rut: "00.000.000-0",                          // RUT de la empresa o del contribuyente
+    email: "contacto@tudominio.cl",               // también sirve para que te pidan sus datos (derechos)
+    hosting: "Cloudflare",                        // dónde está alojada la página
+    updated: "14 de octubre de 2026",             // fecha de la última revisión de los textos
+    retention: "el tiempo necesario para gestionar tu reserva y atender eventuales reclamos",
+    paymentNote: "Este sitio no cobra ni procesa pagos: el servicio se paga en el local.",
+    lateNote: "Si llegas con más de 15 minutos de atraso, podríamos reasignar tu hora a otro cliente."
+  }
 };
 
 /* Si una foto no carga, prueba con el respaldo y, si tampoco, la oculta. */
@@ -312,7 +329,7 @@ h2{font-size:clamp(1.75rem,7vw,2.6rem);line-height:1.02;font-weight:800;letter-s
 .addr small{display:block;margin-top:4px;font-size:15px;font-weight:500;color:var(--muted)}
 .btns{display:grid;gap:10px;margin-top:16px}
 .mapbox{position:relative;margin-top:16px;aspect-ratio:16/11;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card);display:grid;place-items:center}
-.mapbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.5) invert(.9) hue-rotate(180deg) contrast(.9)}
+.mapbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .mapph{display:grid;gap:10px;justify-items:center;padding:18px;text-align:center;color:var(--muted);font-size:14px}
 .mapph .ic{width:30px;height:30px;color:var(--accent)}
 .hours{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
@@ -335,6 +352,27 @@ h2{font-size:clamp(1.75rem,7vw,2.6rem);line-height:1.02;font-weight:800;letter-s
 .bar .btn{min-height:48px;padding:0 10px}
 .bar .sq{padding:0}
 body.kb .bar{display:none}
+
+/* ---------- Legal ---------- */
+.legal{grid-column:1/-1;padding-top:16px;border-top:1px solid var(--line);font-size:13px;line-height:1.6}
+.legal .links{display:flex;flex-wrap:wrap;gap:0 20px;margin-top:4px}
+.lk{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+.legal .lk{padding:10px 0;font-size:14px}
+.fine .lk{font-size:inherit}
+.dlg{width:min(680px,calc(100% - 24px));max-height:calc(100dvh - 24px);margin:auto;padding:0;border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--text);overflow:hidden}
+.dlg[open]{display:flex;flex-direction:column}
+.dlg::backdrop{background:rgba(0,0,0,.74)}
+.dlg header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);flex:none}
+.dlg h2{font-size:1.1rem;line-height:1.2;margin:0;letter-spacing:-.01em}
+.dlg .x{width:44px;height:44px;display:grid;place-items:center;border-radius:10px;margin:-6px -8px -6px 0;flex:none}
+.dlg .lbody{min-height:0;overflow-y:auto;padding:18px 18px 26px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.dlg .lbody h3{font-size:15px;font-weight:800;margin:22px 0 6px}
+.dlg .lbody h3:first-child{margin-top:0}
+.dlg .lbody p,.dlg .lbody li{font-size:14.5px;line-height:1.6;color:#d6d2ca}
+.dlg .lbody ul{list-style:disc;padding-left:20px;display:grid;gap:5px}
+.dlg .lbody a{text-decoration:underline;text-underline-offset:3px;color:var(--text)}
+.dlg .lbody .upd{margin-top:22px;font-size:13px;color:var(--muted)}
+body.lock{overflow:hidden}
 
 /* ---------- Escritorio ---------- */
 @media (min-width:560px){
@@ -437,7 +475,7 @@ body.kb .bar{display:none}
   <div class="wrap">
     <span class="eyebrow">Servicios y precios</span>
     <h2>Elige tu servicio</h2>
-    <p class="lead">Toca uno y sigue con la reserva. Valores referenciales.</p>
+    <p class="lead">Toca uno y sigue con la reserva. <span id="priceNote"></span></p>
     <ul class="svc" id="svcList"></ul>
   </div>
 </section>
@@ -519,8 +557,25 @@ body.kb .bar{display:none}
       <span id="copy"></span>
       <div id="demoTag" style="margin-top:10px"></div>
     </div>
+    <div class="legal">
+      <span id="legalId"></span>
+      <div class="links">
+        <button type="button" class="lk" data-legal="privacy">Política de privacidad</button>
+        <button type="button" class="lk" data-legal="terms">Términos de la reserva</button>
+      </div>
+    </div>
   </div>
 </footer>
+
+<!-- ============ TEXTOS LEGALES (se llenan desde CONFIG.legal) ============ -->
+<dialog class="dlg" id="dlgPrivacy" aria-labelledby="dlgPrivacyT">
+  <header><h2 id="dlgPrivacyT">Política de privacidad</h2><button type="button" class="x" data-close aria-label="Cerrar"><svg class="ic"><use href="#i-x"/></svg></button></header>
+  <div class="lbody" id="bodyPrivacy"></div>
+</dialog>
+<dialog class="dlg" id="dlgTerms" aria-labelledby="dlgTermsT">
+  <header><h2 id="dlgTermsT">Términos de la reserva</h2><button type="button" class="x" data-close aria-label="Cerrar"><svg class="ic"><use href="#i-x"/></svg></button></header>
+  <div class="lbody" id="bodyTerms"></div>
+</dialog>
 
 <!-- ============ BARRA INFERIOR (solo celular) ============ -->
 <div class="bar">
@@ -592,6 +647,63 @@ body.kb .bar{display:none}
     var a = C.agency, tag = "Demo creado por " + esc(a.name);
     $("#demoTag").innerHTML = '<span class="demo">' + (a.whatsapp ? '<a href="https://wa.me/' + esc(a.whatsapp) + '" target="_blank" rel="noopener">' + tag + "</a>" : tag) + "</span>";
   }
+
+  /* ---------- Datos legales, política de privacidad y términos ---------- */
+  var L = C.legal || {};
+  if (L.rut === "00.000.000-0" || /tudominio/.test(L.email || "")) { console.warn("[Plantilla] Completa CONFIG.legal con los datos reales del cliente (razón social, RUT y correo)."); }
+  $("#priceNote").textContent = C.priceNote || "";
+  $("#legalId").textContent = [L.razonSocial, L.rut ? "RUT " + L.rut : "", L.email].filter(Boolean).join(" · ");
+
+  function legalDocs() {
+    var rs = esc(L.razonSocial), rut = esc(L.rut), nm = esc(B.name), upd = esc(L.updated || "");
+    var mail = '<a href="mailto:' + esc(L.email) + '">' + esc(L.email) + "</a>";
+    var wa = '<a href="' + LINKS.waHello + '" target="_blank" rel="noopener">WhatsApp</a>';
+    var who = "<p><b>" + rs + "</b>, RUT " + rut + ", con domicilio en " + esc(addrFull) + ", que opera bajo el nombre <b>" + nm + "</b> (en adelante, “nosotros”). Contacto: " + mail + " · " + esc(B.phoneLabel) + ".</p>";
+    var privacy =
+      "<h3>Quién es el responsable</h3>" + who +
+      "<h3>Qué datos tratamos</h3><ul>" +
+        "<li>El nombre y el comentario que escribes en el formulario de reserva.</li>" +
+        "<li>Los datos de la hora que eliges: servicio, barbero, día y hora.</li>" +
+        "<li>No te pedimos RUT, correo, dirección ni datos de pago.</li></ul>" +
+      "<h3>Para qué los usamos</h3><p>Para gestionar tu solicitud de hora, confirmarla o reagendarla y contactarte por esa reserva. No los usamos para publicidad ni los vendemos o cedemos a otras empresas.</p>" +
+      "<h3>Cómo viaja tu solicitud</h3><p>Al presionar “Enviar solicitud por WhatsApp” se abre tu WhatsApp con un mensaje ya escrito, y tú decides si lo envías. Esta página no guarda tu solicitud en ningún servidor. Una vez enviada, queda en la conversación de WhatsApp, que se rige por las condiciones y la política de privacidad de WhatsApp (Meta).</p>" +
+      "<h3>Qué se guarda en tu dispositivo</h3><p>Guardamos tu nombre en el almacenamiento local de tu navegador para que no tengas que escribirlo de nuevo. No se envía a ningún servidor y puedes borrarlo en cualquier momento limpiando los datos de este sitio en tu navegador.</p>" +
+      "<h3>Cookies y servicios de terceros</h3><p>Esta página no usa cookies propias, ni herramientas de analítica o publicidad. Para funcionar carga las tipografías de Google Fonts y el mapa de Google Maps; al hacerlo, Google puede recibir tu dirección IP y datos técnicos de tu dispositivo, y puede usar cookies o tecnologías similares, según su propia política de privacidad. El sitio está alojado en " + esc(L.hosting || "un proveedor de alojamiento") + ", que puede registrar datos técnicos de la visita (como la IP) por razones de seguridad y funcionamiento.</p>" +
+      "<h3>Cuánto tiempo los conservamos</h3><p>Conservamos los datos de tu reserva durante " + esc(L.retention) + ". Después los eliminamos.</p>" +
+      "<h3>Tus derechos</h3><p>Puedes pedirnos acceso, rectificación, supresión, oposición, bloqueo o portabilidad de tus datos escribiendo a " + mail + ". Responderemos dentro de los plazos que establece la ley. Si consideras que tus derechos no fueron respetados, puedes recurrir a la autoridad competente en materia de protección de datos personales.</p>" +
+      "<h3>Menores de edad</h3><p>Las reservas de servicios para niños deben ser solicitadas por su madre, padre o representante legal.</p>" +
+      '<p class="upd">Última actualización: ' + upd + ".</p>";
+    var terms =
+      "<h3>Quién ofrece el servicio</h3>" + who +
+      "<h3>Qué es una solicitud de hora</h3><p>Este sitio te permite solicitar una hora. La solicitud se envía por WhatsApp y la hora queda confirmada solo cuando respondemos confirmándola. Los horarios que ves se calculan según la jornada del local y de cada barbero, pero otro cliente pudo haber tomado esa hora; en ese caso te propondremos una alternativa.</p>" +
+      "<h3>Precios</h3><p>" + esc(C.priceNote || "") + " El precio que te confirmemos es el que pagarás por el servicio. En los servicios marcados “Desde”, el valor final depende del trabajo y te lo informaremos antes de comenzar.</p>" +
+      "<h3>Pagos</h3><p>" + esc(L.paymentNote || "") + "</p>" +
+      "<h3>Cambios, cancelaciones y atrasos</h3><p>Si no puedes asistir, avísanos por " + wa + " con la mayor anticipación posible para liberar tu hora. " + esc(L.lateNote || "") + "</p>" +
+      "<h3>Reclamos y consultas</h3><p>Escríbenos a " + mail + " o por " + wa + " y te responderemos a la brevedad. También puedes acudir al Servicio Nacional del Consumidor (SERNAC): www.sernac.cl.</p>" +
+      "<h3>Datos personales</h3><p>El tratamiento de tus datos se explica en nuestra <button type=\"button\" class=\"lk\" data-legal=\"privacy\">Política de privacidad</button>.</p>" +
+      "<h3>Legislación aplicable</h3><p>Estas condiciones se rigen por las leyes de la República de Chile, en especial la Ley N° 19.496 sobre Protección de los Derechos de los Consumidores.</p>" +
+      '<p class="upd">Última actualización: ' + upd + ".</p>";
+    return { privacy: privacy, terms: terms };
+  }
+  var docs = legalDocs();
+  $("#bodyPrivacy").innerHTML = docs.privacy;
+  $("#bodyTerms").innerHTML = docs.terms;
+
+  function openLegal(kind) {
+    var d = $(kind === "terms" ? "#dlgTerms" : "#dlgPrivacy"), other = $(kind === "terms" ? "#dlgPrivacy" : "#dlgTerms");
+    if (other.open) other.close();
+    $(".lbody", d).scrollTop = 0;
+    if (d.showModal) d.showModal(); else d.setAttribute("open", "");
+    document.body.classList.add("lock");
+  }
+  $$(".dlg").forEach(function (d) {
+    d.addEventListener("close", function () { if (!$$(".dlg").some(function (x) { return x.open; })) document.body.classList.remove("lock"); });
+    d.addEventListener("click", function (e) { if (e.target === d || e.target.closest("[data-close]")) d.close(); });
+  });
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-legal]");
+    if (t) openLegal(t.getAttribute("data-legal"));
+  });
 
   /* ---------- Imágenes ---------- */
   function img(src, alt, pos, eager) {
@@ -672,9 +784,29 @@ body.kb .bar{display:none}
   }
 
   /* ---------- Mapa (se carga al tocar, para no gastar datos) ---------- */
-  $("#mapBtn").addEventListener("click", function () {
-    $("#mapbox").innerHTML = '<iframe title="Mapa de ' + esc(B.name) + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=' + encodeURIComponent(addrFull) + '&hl=es&z=16&output=embed"></iframe>';
-  });
+  var mapLoaded = false;
+  function loadMap() {
+    if (mapLoaded) return; mapLoaded = true;
+    var box = $("#mapbox"), ok = false, f = document.createElement("iframe");
+    f.title = "Mapa de " + B.name;
+    f.referrerPolicy = "no-referrer-when-downgrade";
+    f.src = "https://www.google.com/maps?q=" + encodeURIComponent(addrFull) + "&hl=es&z=16&output=embed";
+    f.addEventListener("load", function () { ok = true; });
+    box.innerHTML = ""; box.appendChild(f);
+    /* Si en 12 s no cargó (sin señal, bloqueador, etc.), ofrece abrirlo en la app de mapas */
+    setTimeout(function () {
+      if (ok) return;
+      box.innerHTML = '<div class="mapph"><svg class="ic"><use href="#i-pin"/></svg><span>No pudimos mostrar el mapa aquí.</span><a class="btn btn-ghost" style="min-height:44px" href="' + LINKS.maps + '" target="_blank" rel="noopener">Abrir en Google Maps</a></div>';
+    }, 12000);
+  }
+  /* El mapa se carga solo al acercarte a esa sección (no antes, para no gastar datos) */
+  if ("IntersectionObserver" in window) {
+    var mapIO = new IntersectionObserver(function (en) {
+      if (en[0].isIntersecting) { mapIO.disconnect(); loadMap(); }
+    }, { rootMargin: "500px 0px" });
+    mapIO.observe($("#mapbox"));
+  }
+  $("#mapBtn").addEventListener("click", loadMap);
 
   /* ---------- Menú móvil ---------- */
   var mbtn = $("#mbtn"), menu = $("#menu");
@@ -823,7 +955,8 @@ body.kb .bar{display:none}
         '<label class="fld"><span>Comentario (opcional)</span><input id="fNote" type="text" maxlength="140" placeholder="Ej: quiero fade bajo" value="' + esc(S.note) + '"></label>' +
         '<p class="err" id="fErr" hidden>Escribe tu nombre para continuar.</p>' +
         '<a id="send" class="btn btn-wa btn-block" href="#" target="_blank" rel="noopener"><svg class="ic"><use href="#i-wa"/></svg>Enviar solicitud por WhatsApp</a>' +
-        '<p class="fine">Se abre WhatsApp con tu solicitud lista. Tu hora queda confirmada cuando te respondamos.</p>';
+        '<p class="fine">Se abre WhatsApp con tu solicitud lista. Tu hora queda confirmada cuando te respondamos.</p>' +
+        '<p class="fine">Usaremos tu nombre y los datos de la reserva solo para gestionar tu hora. Más información: <button type="button" class="lk" data-legal="privacy">Política de privacidad</button> · <button type="button" class="lk" data-legal="terms">Términos de la reserva</button></p>';
     }
     return h;
   }
